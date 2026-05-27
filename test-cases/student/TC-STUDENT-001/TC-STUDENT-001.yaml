@@ -1,0 +1,72 @@
+# TC-STUDENT-001 新增学生信息（正常）
+# student 模块 - 测试用例
+
+id: TC-STUDENT-001
+title: 新增学生信息（正常）
+version: 1.0
+priority: P0
+module: student
+tags: [crud, create, smoke]
+
+created_at: 2026-05-27
+updated_at: 2026-05-27
+status: active
+
+history:
+  - version: 1.0
+    date: 2026-05-27
+    author: 测试
+    change: 初始创建
+
+preconditions:
+  - 用户已登录系统
+  - 当前位于学生管理页面
+  - 学号 "2024001" 在系统中不存在
+
+steps:
+  - action: 点击"新增学生"按钮
+    expected: 显示新增学生表单/弹窗
+  - action: 输入学号 "2024001"
+    expected: 学号输入框显示 "2024001"
+  - action: 输入姓名 "张三"
+    expected: 姓名输入框显示 "张三"
+  - action: 选择性别 "男"
+    expected: 性别选择框显示 "男"
+  - action: 选择出生日期 "2000-01-15"
+    expected: 出生日期选择器显示 "2000-01-15"
+  - action: 输入手机号 "13800138001"
+    expected: 手机号输入框显示 "13800138001"
+  - action: 输入邮箱 "zhangsan@example.com"
+    expected: 邮箱输入框显示 "zhangsan@example.com"
+  - action: 选择所属学院 "计算机学院"
+    expected: 学院选择框显示 "计算机学院"
+  - action: 选择所属专业 "软件工程"
+    expected: 专业选择框显示 "软件工程"
+  - action: 选择所属班级 "软工2401班"
+    expected: 班级选择框显示 "软工2401班"
+  - action: 输入入学年份 "2024"
+    expected: 入学年份输入框显示 "2024"
+  - action: 选择学籍状态 "在读"
+    expected: 学籍状态选择框显示 "在读"
+  - action: 输入家庭住址 "北京市海淀区"
+    expected: 家庭住址输入框显示 "北京市海淀区"
+  - action: 点击"保存"按钮
+    expected: 学生信息保存成功，显示成功提示，学生列表中显示新增记录
+
+expected_results:
+  - 学生信息成功保存
+  - 学生列表中显示新增的学生记录
+  - 各字段信息显示正确
+  - 显示保存成功提示
+
+assertions:
+  - type: ui
+    description: 显示新增学生记录
+    validate:
+      - 学生列表中存在学号为"2024001"的记录
+      - 学生姓名显示为"张三"
+  - type: data
+    description: 数据正确保存
+    validate:
+      - 数据库中存在该学生记录
+      - 各字段值与输入一致

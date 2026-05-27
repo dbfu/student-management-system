@@ -1,0 +1,63 @@
+# TC-STUDENT-003 新增学生信息（必填字段为空）
+# student 模块 - 测试用例
+
+id: TC-STUDENT-003
+title: 新增学生信息（必填字段为空）
+version: 1.0
+priority: P0
+module: student
+tags: [crud, create, validation, required]
+
+created_at: 2026-05-27
+updated_at: 2026-05-27
+status: active
+
+history:
+  - version: 1.0
+    date: 2026-05-27
+    author: 测试
+    change: 初始创建
+
+preconditions:
+  - 用户已登录系统
+  - 当前位于学生管理页面
+
+test_scenarios:
+  - name: 学号为空
+    steps:
+      - action: 点击"新增学生"按钮
+        expected: 显示新增学生表单
+      - action: 学号输入框留空
+        expected: 学号输入框为空
+      - action: 输入姓名 "张三"
+        expected: 姓名输入框显示 "张三"
+      - action: 点击"保存"按钮
+        expected: 显示错误提示"学号不能为空"
+
+  - name: 姓名为空
+    steps:
+      - action: 点击"新增学生"按钮
+        expected: 显示新增学生表单
+      - action: 输入学号 "2024002"
+        expected: 学号输入框显示 "2024002"
+      - action: 姓名输入框留空
+        expected: 姓名输入框为空
+      - action: 点击"保存"按钮
+        expected: 显示错误提示"姓名不能为空"
+
+expected_results:
+  - 系统正确校验必填字段
+  - 显示明确的错误提示信息
+  - 学生信息未保存
+  - 用户可以补充必填字段后重新提交
+
+assertions:
+  - type: ui
+    description: 显示必填校验提示
+    validate:
+      - 空学号时显示"学号不能为空"
+      - 空姓名时显示"姓名不能为空"
+  - type: behavior
+    description: 数据未保存
+    validate:
+      - 点击保存时前端校验，不提交到后端

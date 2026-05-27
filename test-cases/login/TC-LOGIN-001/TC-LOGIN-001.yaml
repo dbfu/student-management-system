@@ -1,0 +1,52 @@
+# TC-LOGIN-001 用户正常登录
+# login 模块 - 测试用例
+
+id: TC-LOGIN-001
+title: 用户正常登录
+version: 1.0
+priority: P0
+module: login
+tags: [auth, login, smoke]
+
+created_at: 2026-05-27
+updated_at: 2026-05-27
+status: active
+
+history:
+  - version: 1.0
+    date: 2026-05-27
+    author: 测试
+    change: 初始创建
+
+preconditions:
+  - 系统已部署并正常运行
+  - 已存在有效的用户账号（用户名: admin, 密码: admin123）
+  - 用户未登录
+
+steps:
+  - action: 打开登录页面
+    expected: 显示登录页面，包含用户名输入框、密码输入框、登录按钮
+  - action: 输入用户名 "admin"
+    expected: 用户名输入框显示 "admin"
+  - action: 输入密码 "admin123"
+    expected: 密码输入框显示密码内容（加密显示）
+  - action: 点击登录按钮
+    expected: 登录成功，跳转到首页仪表盘
+
+expected_results:
+  - 登录响应时间不超过 2 秒
+  - 成功跳转到首页仪表盘页面
+  - 页面显示系统名称和用户信息
+  - 登录状态已保存（可访问其他页面）
+
+assertions:
+  - type: ui
+    description: 登录成功跳转
+    validate:
+      - 当前URL为首页地址
+      - 页面显示仪表盘内容
+  - type: state
+    description: 登录状态已保存
+    validate:
+      - localStorage或cookie包含登录token
+      - 可访问需要登录的页面

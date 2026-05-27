@@ -1,0 +1,57 @@
+# TC-SCORE-004 自动计算总评成绩
+# score 模块 - 测试用例
+
+id: TC-SCORE-004
+title: 自动计算总评成绩
+version: 1.0
+priority: P1
+module: score
+tags: [calculation, auto, pass-fail]
+
+created_at: 2026-05-27
+updated_at: 2026-05-27
+status: active
+
+history:
+  - version: 1.0
+    date: 2026-05-27
+    author: 测试
+    change: 初始创建
+
+preconditions:
+  - 用户已登录系统
+  - 当前位于成绩管理页面
+
+test_scenarios:
+  - name: 及格成绩计算
+    steps:
+      - action: 输入平时成绩 "80"、期中成绩 "75"、期末成绩 "85"
+        expected: 输入框显示成绩
+      - action: 点击保存或自动计算
+        expected: 总评成绩显示计算结果（80×30% + 75×20% + 85×50% = 82），及格状态显示"及格"
+
+  - name: 不及格成绩计算
+    steps:
+      - action: 输入平时成绩 "40"、期中成绩 "50"、期末成绩 "55"
+        expected: 输入框显示成绩
+      - action: 点击保存或自动计算
+        expected: 总评成绩显示计算结果（40×30% + 50×20% + 55×50% = 50.5），及格状态显示"不及格"
+
+  - name: 边界成绩计算（60分）
+    steps:
+      - action: 输入平时成绩 "60"、期中成绩 "60"、期末成绩 "60"
+        expected: 输入框显示成绩
+      - action: 点击保存或自动计算
+        expected: 总评成绩显示60，及格状态显示"及格"
+
+expected_results:
+  - 总评成绩按配置规则自动计算
+  - 及格状态正确判断（总评>=60为及格）
+
+assertions:
+  - type: calculation
+    description: 计算结果正确
+    validate:
+      - 总评成绩 = 平时×30% + 期中×20% + 期末×50%
+      - 总评>=60时及格状态为"及格"
+      - 总评<60时及格状态为"不及格"

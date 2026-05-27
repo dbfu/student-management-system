@@ -1,0 +1,51 @@
+# TC-LOGIN-002 用户名或密码错误登录
+# login 模块 - 测试用例
+
+id: TC-LOGIN-002
+title: 用户名或密码错误登录
+version: 1.0
+priority: P0
+module: login
+tags: [auth, login, error-handling]
+
+created_at: 2026-05-27
+updated_at: 2026-05-27
+status: active
+
+history:
+  - version: 1.0
+    date: 2026-05-27
+    author: 测试
+    change: 初始创建
+
+preconditions:
+  - 系统已部署并正常运行
+  - 用户未登录
+
+steps:
+  - action: 打开登录页面
+    expected: 显示登录页面
+  - action: 输入用户名 "wronguser"
+    expected: 用户名输入框显示 "wronguser"
+  - action: 输入密码 "wrongpass"
+    expected: 密码输入框显示密码内容
+  - action: 点击登录按钮
+    expected: 登录失败，显示错误提示
+
+expected_results:
+  - 登录失败
+  - 显示明确的错误提示信息（如"用户名或密码错误"）
+  - 用户停留在登录页面
+  - 用户可以重新输入登录信息
+
+assertions:
+  - type: ui
+    description: 显示错误提示
+    validate:
+      - 页面显示错误提示信息
+      - 错误信息内容清晰准确
+  - type: state
+    description: 未跳转页面
+    validate:
+      - 当前URL仍为登录页面地址
+      - 未生成登录token

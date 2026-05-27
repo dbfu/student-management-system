@@ -1,0 +1,53 @@
+# TC-STUDENT-006 修改学生信息
+# student 模块 - 测试用例
+
+id: TC-STUDENT-006
+title: 修改学生信息
+version: 1.0
+priority: P0
+module: student
+tags: [crud, update]
+
+created_at: 2026-05-27
+updated_at: 2026-05-27
+status: active
+
+history:
+  - version: 1.0
+    date: 2026-05-27
+    author: 测试
+    change: 初始创建
+
+preconditions:
+  - 用户已登录系统
+  - 当前位于学生管理页面
+  - 存在学号为 "2024001" 的学生记录
+
+steps:
+  - action: 在学生列表中找到学号为 "2024001" 的学生
+    expected: 学生记录显示在列表中
+  - action: 点击该学生的"编辑"按钮
+    expected: 显示编辑学生表单，表单中显示当前学生信息
+  - action: 修改姓名为 "张三更新"
+    expected: 姓名输入框显示 "张三更新"
+  - action: 修改手机号为 "13900139001"
+    expected: 手机号输入框显示 "13900139001"
+  - action: 点击"保存"按钮
+    expected: 显示修改成功提示，学生列表中显示更新后的信息
+
+expected_results:
+  - 学生信息修改成功
+  - 学生列表中显示更新后的信息
+  - 显示修改成功提示
+  - 记录更新时间（如有）
+
+assertions:
+  - type: ui
+    description: 显示更新后的信息
+    validate:
+      - 学生列表中姓名显示为"张三更新"
+      - 手机号显示为"13900139001"
+  - type: data
+    description: 数据正确更新
+    validate:
+      - 数据库中该学生记录已更新

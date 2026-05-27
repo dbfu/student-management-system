@@ -1,0 +1,59 @@
+# TC-SCORE-008 导出成绩报表
+# score 模块 - 测试用例
+
+id: TC-SCORE-008
+title: 导出成绩报表
+version: 1.0
+priority: P2
+module: score
+tags: [export, report, excel]
+
+created_at: 2026-05-27
+updated_at: 2026-05-27
+status: active
+
+history:
+  - version: 1.0
+    date: 2026-05-27
+    author: 测试
+    change: 初始创建
+
+preconditions:
+  - 用户已登录系统
+  - 当前位于成绩管理页面
+  - 系统中存在成绩记录
+
+test_scenarios:
+  - name: 导出课程成绩
+    steps:
+      - action: 选择课程筛选条件
+        expected: 筛选框显示课程名称
+      - action: 点击"导出成绩"按钮
+        expected: 显示导出选项
+      - action: 选择导出格式（Excel）
+        expected: 格式选择为Excel
+      - action: 确认导出
+        expected: 系统生成成绩报表文件，浏览器下载文件
+
+  - name: 导出班级成绩汇总
+    steps:
+      - action: 选择班级和学期筛选条件
+        expected: 筛选条件正确显示
+      - action: 点击"导出成绩"按钮
+        expected: 显示导出选项
+      - action: 确认导出
+        expected: 系统生成班级成绩汇总报表
+
+expected_results:
+  - 成功生成导出文件
+  - 导出文件内容准确完整
+  - 包含学生学号、姓名、各项成绩、总评、及格状态
+  - 文件可正常打开
+
+assertions:
+  - type: file
+    description: 导出文件内容正确
+    validate:
+      - 导出文件包含成绩信息字段
+      - 数据与系统显示一致
+      - Excel文件格式正确可打开

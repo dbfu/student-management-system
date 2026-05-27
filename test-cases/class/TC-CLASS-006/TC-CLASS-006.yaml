@@ -1,0 +1,57 @@
+# TC-CLASS-006 查询班级
+# class 模块 - 测试用例
+
+id: TC-CLASS-006
+title: 查询班级（按条件筛选）
+version: 1.0
+priority: P0
+module: class
+tags: [query, filter, search]
+
+created_at: 2026-05-27
+updated_at: 2026-05-27
+status: active
+
+history:
+  - version: 1.0
+    date: 2026-05-27
+    author: 测试
+    change: 初始创建
+
+preconditions:
+  - 用户已登录系统
+  - 当前位于班级管理页面
+  - 系统中存在多个班级记录
+
+test_scenarios:
+  - name: 按编号搜索
+    steps:
+      - action: 在搜索框输入班级编号
+        expected: 搜索框显示内容
+      - action: 点击搜索
+        expected: 班级列表只显示匹配编号的班级
+
+  - name: 按学院筛选
+    steps:
+      - action: 在学院筛选框选择学院
+        expected: 筛选框显示选择内容
+      - action: 应用筛选
+        expected: 班级列表只显示对应学院的班级
+
+  - name: 按专业筛选
+    steps:
+      - action: 在专业筛选框选择专业
+        expected: 筛选框显示选择内容
+      - action: 应用筛选
+        expected: 班级列表只显示对应专业的班级
+
+expected_results:
+  - 系统正确响应筛选条件
+  - 班级列表显示符合筛选条件的记录
+
+assertions:
+  - type: ui
+    description: 筛选结果正确显示
+    validate:
+      - 按编号搜索结果只包含匹配编号的记录
+      - 按学院筛选结果只包含对应学院的记录

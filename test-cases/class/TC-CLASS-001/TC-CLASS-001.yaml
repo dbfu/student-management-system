@@ -1,0 +1,52 @@
+# TC-CLASS-001 新增班级
+# class 模块 - 测试用例
+
+id: TC-CLASS-001
+title: 新增班级
+version: 1.0
+priority: P0
+module: class
+tags: [crud, create, smoke]
+
+created_at: 2026-05-27
+updated_at: 2026-05-27
+status: active
+
+history:
+  - version: 1.0
+    date: 2026-05-27
+    author: 测试
+    change: 初始创建
+
+preconditions:
+  - 用户已登录系统
+  - 当前位于班级管理页面
+  - 班级编号 "C001" 在系统中不存在
+
+steps:
+  - action: 点击"新增班级"按钮
+    expected: 显示新增班级表单
+  - action: 输入班级编号 "C001"
+    expected: 编号输入框显示 "C001"
+  - action: 输入班级名称 "软工2401班"
+    expected: 名称输入框显示 "软工2401班"
+  - action: 选择所属学院 "计算机学院"
+    expected: 学院选择框显示 "计算机学院"
+  - action: 选择所属专业 "软件工程"
+    expected: 专业选择框显示 "软件工程"
+  - action: 输入年级 "2024"
+    expected: 年级输入框显示 "2024"
+  - action: 点击"保存"按钮
+    expected: 班级信息保存成功，显示成功提示，班级列表显示新增记录
+
+expected_results:
+  - 班级信息成功保存
+  - 班级列表显示新增的班级记录
+  - 班级人数默认为0
+
+assertions:
+  - type: ui
+    description: 显示新增班级记录
+    validate:
+      - 班级列表中存在编号为"C001"的记录
+      - 班级名称显示为"软工2401班"

@@ -1,0 +1,44 @@
+# TC-COURSE-004 修改课程信息
+# course 模块 - 测试用例
+
+id: TC-COURSE-004
+title: 修改课程信息
+version: 1.0
+priority: P1
+module: course
+tags: [crud, update]
+
+created_at: 2026-05-27
+updated_at: 2026-05-27
+status: active
+
+history:
+  - version: 1.0
+    date: 2026-05-27
+    author: 测试
+    change: 初始创建
+
+preconditions:
+  - 用户已登录系统
+  - 当前位于课程管理页面
+  - 存在编号为 "CS001" 的课程记录
+
+steps:
+  - action: 在课程列表中找到编号为 "CS001" 的课程
+    expected: 课程记录显示在列表中
+  - action: 点击"编辑"按钮
+    expected: 显示编辑课程表单
+  - action: 修改学分
+    expected: 学分输入框显示新内容
+  - action: 点击"保存"按钮
+    expected: 显示修改成功提示，课程列表显示更新信息
+
+expected_results:
+  - 课程信息修改成功
+  - 课程列表显示更新后的信息
+
+assertions:
+  - type: ui
+    description: 显示更新后的信息
+    validate:
+      - 课程列表中显示修改后的学分

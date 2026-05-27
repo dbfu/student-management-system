@@ -1,0 +1,56 @@
+# TC-STUDENT-009 学生列表分页
+# student 模块 - 测试用例
+
+id: TC-STUDENT-009
+title: 学生列表分页
+version: 1.0
+priority: P1
+module: student
+tags: [list, pagination, performance]
+
+created_at: 2026-05-27
+updated_at: 2026-05-27
+status: active
+
+history:
+  - version: 1.0
+    date: 2026-05-27
+    author: 测试
+    change: 初始创建
+
+preconditions:
+  - 用户已登录系统
+  - 当前位于学生管理页面
+  - 系统中学生记录数量超过每页显示数量（如超过20条）
+
+steps:
+  - action: 查看学生列表
+    expected: 显示第一页学生记录，显示分页组件
+  - action: 查看分页信息
+    expected: 显示当前页码、总页数、总记录数
+  - action: 点击"下一页"按钮
+    expected: 显示第二页学生记录
+  - action: 点击页码数字（如第5页）
+    expected: 直接跳转到第5页
+  - action: 修改每页显示条数（如改为50条）
+    expected: 学生列表重新加载，每页显示50条记录，分页信息更新
+  - action: 点击"上一页"按钮
+    expected: 显示前一页学生记录
+
+expected_results:
+  - 学生列表支持分页显示
+  - 分页组件功能正常（上一页、下一页、页码跳转）
+  - 可调整每页显示条数
+  - 分页信息显示准确
+
+assertions:
+  - type: ui
+    description: 分页组件正常工作
+    validate:
+      - 第一页"上一页"按钮禁用或隐藏
+      - 最后一页"下一页"按钮禁用或隐藏
+      - 页码显示正确
+  - type: performance
+    description: 查询响应时间
+    validate:
+      - 列表加载时间不超过2秒

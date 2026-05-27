@@ -1,0 +1,46 @@
+# TC-TEACHER-004 修改教师信息
+# teacher 模块 - 测试用例
+
+id: TC-TEACHER-004
+title: 修改教师信息
+version: 1.0
+priority: P0
+module: teacher
+tags: [crud, update]
+
+created_at: 2026-05-27
+updated_at: 2026-05-27
+status: active
+
+history:
+  - version: 1.0
+    date: 2026-05-27
+    author: 测试
+    change: 初始创建
+
+preconditions:
+  - 用户已登录系统
+  - 当前位于教师管理页面
+  - 存在工号为 "T001" 的教师记录
+
+steps:
+  - action: 在教师列表中找到工号为 "T001" 的教师
+    expected: 教师记录显示在列表中
+  - action: 点击"编辑"按钮
+    expected: 显示编辑教师表单，表单显示当前教师信息
+  - action: 修改职称为 "教授"
+    expected: 职称选择框显示 "教授"
+  - action: 修改手机号
+    expected: 手机号输入框显示新内容
+  - action: 点击"保存"按钮
+    expected: 显示修改成功提示，教师列表显示更新信息
+
+expected_results:
+  - 教师信息修改成功
+  - 教师列表显示更新后的信息
+
+assertions:
+  - type: ui
+    description: 显示更新后的信息
+    validate:
+      - 教师列表中职称显示为"教授"

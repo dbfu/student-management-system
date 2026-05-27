@@ -1,0 +1,44 @@
+# TC-CLASS-003 修改班级信息
+# class 模块 - 测试用例
+
+id: TC-CLASS-003
+title: 修改班级信息
+version: 1.0
+priority: P0
+module: class
+tags: [crud, update]
+
+created_at: 2026-05-27
+updated_at: 2026-05-27
+status: active
+
+history:
+  - version: 1.0
+    date: 2026-05-27
+    author: 测试
+    change: 初始创建
+
+preconditions:
+  - 用户已登录系统
+  - 当前位于班级管理页面
+  - 存在编号为 "C001" 的班级记录
+
+steps:
+  - action: 在班级列表中找到编号为 "C001" 的班级
+    expected: 班级记录显示在列表中
+  - action: 点击"编辑"按钮
+    expected: 显示编辑班级表单
+  - action: 修改班级名称
+    expected: 名称输入框显示新内容
+  - action: 点击"保存"按钮
+    expected: 显示修改成功提示，班级列表显示更新信息
+
+expected_results:
+  - 班级信息修改成功
+  - 班级列表显示更新后的信息
+
+assertions:
+  - type: ui
+    description: 显示更新后的信息
+    validate:
+      - 班级列表中显示修改后的班级名称

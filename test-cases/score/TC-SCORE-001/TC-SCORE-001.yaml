@@ -1,0 +1,56 @@
+# TC-SCORE-001 录入成绩
+# score 模块 - 测试用例
+
+id: TC-SCORE-001
+title: 录入成绩
+version: 1.0
+priority: P1
+module: score
+tags: [crud, create, smoke]
+
+created_at: 2026-05-27
+updated_at: 2026-05-27
+status: active
+
+history:
+  - version: 1.0
+    date: 2026-05-27
+    author: 测试
+    change: 初始创建
+
+preconditions:
+  - 用户已登录系统
+  - 当前位于成绩管理页面
+  - 存在学号为 "2024001" 的学生
+  - 存在课程编号为 "CS001" 的课程
+  - 该学生该课程该学期无成绩记录
+
+steps:
+  - action: 选择学期 "2024-2025-1"
+    expected: 学期筛选框显示 "2024-2025-1"
+  - action: 选择课程 "CS001"
+    expected: 课程筛选框显示 "软件工程导论"
+  - action: 选择班级或输入学生学号 "2024001"
+    expected: 显示该学生信息
+  - action: 输入平时成绩 "80"
+    expected: 平时成绩输入框显示 "80"
+  - action: 输入期中成绩 "75"
+    expected: 期中成绩输入框显示 "75"
+  - action: 输入期末成绩 "85"
+    expected: 期末成绩输入框显示 "85"
+  - action: 点击"保存"按钮
+    expected: 成绩录入成功，显示成功提示，自动计算总评成绩并显示及格状态
+
+expected_results:
+  - 成绩成功录入
+  - 自动计算总评成绩
+  - 自动判断及格状态
+  - 记录录入时间
+
+assertions:
+  - type: ui
+    description: 显示录入结果
+    validate:
+      - 成绩列表显示该学生的成绩记录
+      - 总评成绩显示计算结果
+      - 及格状态显示正确

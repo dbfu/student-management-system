@@ -1,0 +1,48 @@
+# TC-ATTENDANCE-002 新增考勤记录（重复考勤）
+# attendance 模块 - 测试用例
+
+id: TC-ATTENDANCE-002
+title: 新增考勤记录（同一学生同一课程同一天重复考勤）
+version: 1.0
+priority: P1
+module: attendance
+tags: [crud, create, validation, unique]
+
+created_at: 2026-05-27
+updated_at: 2026-05-27
+status: active
+
+history:
+  - version: 1.0
+    date: 2026-05-27
+    author: 测试
+    change: 初始创建
+
+preconditions:
+  - 用户已登录系统
+  - 当前位于考勤管理页面
+  - 存在学号为 "2024001" 的学生
+  - 存在课程编号为 "CS001" 的课程
+  - 该学生该课程当天（如2026-05-26）已有考勤记录
+
+steps:
+  - action: 选择课程 "CS001"
+    expected: 课程选择框显示内容
+  - action: 选择考勤日期 "2026-05-26"
+    expected: 日期选择器显示内容
+  - action: 系统显示学生列表
+    expected: 学生列表显示
+  - action: 为学号 "2024001" 的学生选择考勤状态
+    expected: 考勤状态选择框显示内容
+  - action: 点击"提交"按钮
+    expected: 显示错误提示"该学生该课程当天已有考勤记录"
+
+expected_results:
+  - 系统检测到重复考勤记录
+  - 显示明确的错误提示
+
+assertions:
+  - type: ui
+    description: 显示重复考勤提示
+    validate:
+      - 页面显示"该学生该课程当天已有考勤记录"或类似提示

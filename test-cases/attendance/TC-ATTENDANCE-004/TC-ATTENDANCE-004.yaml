@@ -1,0 +1,48 @@
+# TC-ATTENDANCE-004 修改考勤记录
+# attendance 模块 - 测试用例
+
+id: TC-ATTENDANCE-004
+title: 修改考勤记录
+version: 1.0
+priority: P1
+module: attendance
+tags: [crud, update]
+
+created_at: 2026-05-27
+updated_at: 2026-05-27
+status: active
+
+history:
+  - version: 1.0
+    date: 2026-05-27
+    author: 测试
+    change: 初始创建
+
+preconditions:
+  - 用户已登录系统
+  - 当前位于考勤管理页面
+  - 存在学号为 "2024001" 学生课程 "CS001" 日期 "2026-05-26" 的考勤记录，状态为"正常"
+
+steps:
+  - action: 在考勤列表中找到该学生的考勤记录
+    expected: 考勤记录显示在列表中
+  - action: 点击"编辑"按钮
+    expected: 显示编辑考勤表单，显示当前考勤信息
+  - action: 修改考勤状态为 "迟到"
+    expected: 考勤状态选择框显示 "迟到"
+  - action: 修改备注信息
+    expected: 备注输入框显示新内容
+  - action: 点击"保存"按钮
+    expected: 显示修改成功提示，考勤列表显示更新信息，更新时间记录
+
+expected_results:
+  - 考勤记录修改成功
+  - 考勤状态正确更新
+  - 记录更新时间
+
+assertions:
+  - type: ui
+    description: 显示更新结果
+    validate:
+      - 考勤列表显示考勤状态为"迟到"
+      - 显示更新时间

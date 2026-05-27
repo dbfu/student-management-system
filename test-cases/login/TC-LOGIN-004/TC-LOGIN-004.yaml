@@ -1,0 +1,46 @@
+# TC-LOGIN-004 用户退出登录
+# login 模块 - 测试用例
+
+id: TC-LOGIN-004
+title: 用户退出登录
+version: 1.0
+priority: P0
+module: login
+tags: [auth, logout]
+
+created_at: 2026-05-27
+updated_at: 2026-05-27
+status: active
+
+history:
+  - version: 1.0
+    date: 2026-05-27
+    author: 测试
+    change: 初始创建
+
+preconditions:
+  - 用户已登录系统
+  - 当前位于任意系统内部页面
+
+steps:
+  - action: 找到退出登录按钮/入口
+    expected: 显示退出登录按钮（通常在顶部导航栏或用户菜单中）
+  - action: 点击退出登录按钮
+    expected: 系统清除登录状态，跳转到登录页面
+
+expected_results:
+  - 登录状态被清除
+  - 用户跳转到登录页面
+  - 无法访问需要登录的内部页面
+  - 重新登录需要再次输入账号密码
+
+assertions:
+  - type: state
+    description: 登录状态已清除
+    validate:
+      - localStorage或cookie中的登录token已删除
+      - 当前URL为登录页面地址
+  - type: behavior
+    description: 无法访问内部页面
+    validate:
+      - 直接访问内部页面URL会被重定向到登录页面

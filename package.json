@@ -1,0 +1,18 @@
+{
+  "name": "student-management-system",
+  "private": true,
+  "version": "1.0.0",
+  "description": "学生管理系统 - 面向中小学校和培训机构的学生信息一体化管理系统",
+  "scripts": {
+    "dev": "pnpm --filter './web' --filter './server' run dev",
+    "build": "pnpm --filter './web' --filter './server' run build",
+    "start": "pnpm --filter './server' run start",
+    "lint": "pnpm --filter './web' --filter './server' run lint",
+    "test": "pnpm --filter './web' --filter './server' run test"
+  },
+  "engines": {
+    "node": ">=18.0.0",
+    "pnpm": ">=8.0.0"
+  },
+  "packageManager": "pnpm@8.15.0"
+}

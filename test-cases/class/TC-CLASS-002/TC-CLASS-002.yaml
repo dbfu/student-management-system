@@ -1,0 +1,45 @@
+# TC-CLASS-002 新增班级（编号重复）
+# class 模块 - 测试用例
+
+id: TC-CLASS-002
+title: 新增班级（编号重复）
+version: 1.0
+priority: P0
+module: class
+tags: [crud, create, validation, unique]
+
+created_at: 2026-05-27
+updated_at: 2026-05-27
+status: active
+
+history:
+  - version: 1.0
+    date: 2026-05-27
+    author: 测试
+    change: 初始创建
+
+preconditions:
+  - 用户已登录系统
+  - 当前位于班级管理页面
+  - 班级编号 "C001" 在系统中已存在
+
+steps:
+  - action: 点击"新增班级"按钮
+    expected: 显示新增班级表单
+  - action: 输入班级编号 "C001"
+    expected: 编号输入框显示 "C001"
+  - action: 输入班级名称 "另一个班级"
+    expected: 名称输入框显示内容
+  - action: 点击"保存"按钮
+    expected: 显示错误提示"班级编号已存在"
+
+expected_results:
+  - 系统检测到编号重复
+  - 显示明确的错误提示
+  - 班级信息未保存
+
+assertions:
+  - type: ui
+    description: 显示编号重复提示
+    validate:
+      - 页面显示"班级编号已存在"或类似提示

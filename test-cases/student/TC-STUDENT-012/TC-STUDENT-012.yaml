@@ -1,0 +1,50 @@
+# TC-STUDENT-012 删除已有关联成绩/考勤的学生
+# student 模块 - 测试用例
+
+id: TC-STUDENT-012
+title: 删除已有关联成绩/考勤的学生
+version: 1.0
+priority: P1
+module: student
+tags: [delete, constraint, related-data]
+
+created_at: 2026-05-27
+updated_at: 2026-05-27
+status: active
+
+history:
+  - version: 1.0
+    date: 2026-05-27
+    author: 测试
+    change: 初始创建
+
+preconditions:
+  - 用户已登录系统
+  - 当前位于学生管理页面
+  - 存在学号为 "2024001" 的学生，且该学生已有成绩或考勤记录
+
+steps:
+  - action: 在学生列表中找到学号为 "2024001" 的学生
+    expected: 学生记录显示在列表中
+  - action: 点击该学生的"删除"按钮
+    expected: 显示删除确认对话框，提示该学生有关联数据
+  - action: 点击"确认"按钮
+    expected: 显示提示信息，建议修改学籍状态而非物理删除
+
+expected_results:
+  - 系统检测到学生存在关联数据
+  - 提示用户不建议物理删除
+  - 建议通过修改学籍状态处理
+  - 或者提供强制删除选项但需明确后果
+
+assertions:
+  - type: ui
+    description: 显示关联数据提示
+    validate:
+      - 提示"该学生已有成绩/考勤记录，不建议删除"
+      - 提示可通过修改学籍状态处理
+  - type: behavior
+    description: 保护关联数据
+    validate:
+      - 删除学生时成绩/考勤数据不被意外删除
+      - 或者明确提示删除会同时删除关联数据

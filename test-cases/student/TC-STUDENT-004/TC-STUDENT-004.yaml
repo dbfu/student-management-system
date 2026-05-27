@@ -1,0 +1,57 @@
+# TC-STUDENT-004 新增学生信息（手机号格式错误）
+# student 模块 - 测试用例
+
+id: TC-STUDENT-004
+title: 新增学生信息（手机号格式错误）
+version: 1.0
+priority: P1
+module: student
+tags: [crud, create, validation, format]
+
+created_at: 2026-05-27
+updated_at: 2026-05-27
+status: active
+
+history:
+  - version: 1.0
+    date: 2026-05-27
+    author: 测试
+    change: 初始创建
+
+preconditions:
+  - 用户已登录系统
+  - 当前位于学生管理页面
+
+test_scenarios:
+  - name: 手机号位数不足
+    steps:
+      - action: 输入手机号 "138001"
+        expected: 手机号输入框显示 "138001"
+      - action: 点击保存
+        expected: 显示错误提示"手机号格式不正确"
+
+  - name: 手机号含非数字字符
+    steps:
+      - action: 输入手机号 "1380013800a"
+        expected: 手机号输入框显示 "1380013800a"
+      - action: 点击保存
+        expected: 显示错误提示"手机号格式不正确"
+
+  - name: 手机号以非1开头
+    steps:
+      - action: 输入手机号 "28000138001"
+        expected: 手机号输入框显示 "28000138001"
+      - action: 点击保存
+        expected: 显示错误提示"手机号格式不正确"
+
+expected_results:
+  - 系统正确校验手机号格式
+  - 显示明确的错误提示信息
+  - 学生信息未保存
+
+assertions:
+  - type: ui
+    description: 显示格式错误提示
+    validate:
+      - 显示"手机号格式不正确"或类似提示
+      - 学生信息未保存

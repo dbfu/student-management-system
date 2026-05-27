@@ -1,0 +1,72 @@
+# TC-LOGIN-003 空用户名或密码登录
+# login 模块 - 测试用例
+
+id: TC-LOGIN-003
+title: 空用户名或密码登录
+version: 1.0
+priority: P0
+module: login
+tags: [auth, login, validation, boundary]
+
+created_at: 2026-05-27
+updated_at: 2026-05-27
+status: active
+
+history:
+  - version: 1.0
+    date: 2026-05-27
+    author: 测试
+    change: 初始创建
+
+preconditions:
+  - 系统已部署并正常运行
+  - 用户未登录
+
+test_scenarios:
+  - name: 空用户名
+    steps:
+      - action: 打开登录页面
+        expected: 显示登录页面
+      - action: 用户名输入框留空
+        expected: 用户名输入框为空
+      - action: 输入密码 "admin123"
+        expected: 密码输入框显示密码
+      - action: 点击登录按钮
+        expected: 显示错误提示"用户名不能为空"
+
+  - name: 空密码
+    steps:
+      - action: 打开登录页面
+        expected: 显示登录页面
+      - action: 输入用户名 "admin"
+        expected: 用户名输入框显示 "admin"
+      - action: 密码输入框留空
+        expected: 密码输入框为空
+      - action: 点击登录按钮
+        expected: 显示错误提示"密码不能为空"
+
+  - name: 全空
+    steps:
+      - action: 打开登录页面
+        expected: 显示登录页面
+      - action: 用户名和密码都留空
+        expected: 输入框都为空
+      - action: 点击登录按钮
+        expected: 显示错误提示
+
+expected_results:
+  - 系统正确校验必填字段
+  - 显示明确的错误提示信息
+  - 用户停留在登录页面
+  - 不发送无效登录请求到后端
+
+assertions:
+  - type: ui
+    description: 显示必填校验提示
+    validate:
+      - 空用户名时显示"用户名不能为空"或类似提示
+      - 空密码时显示"密码不能为空"或类似提示
+  - type: behavior
+    description: 前端校验优先
+    validate:
+      - 点击登录时前端先校验，不直接提交空值到后端

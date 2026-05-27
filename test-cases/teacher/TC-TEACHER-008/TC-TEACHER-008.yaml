@@ -1,0 +1,50 @@
+# TC-TEACHER-008 分配授课课程
+# teacher 模块 - 测试用例
+
+id: TC-TEACHER-008
+title: 分配授课课程
+version: 1.0
+priority: P1
+module: teacher
+tags: [assign, course, relation]
+
+created_at: 2026-05-27
+updated_at: 2026-05-27
+status: active
+
+history:
+  - version: 1.0
+    date: 2026-05-27
+    author: 测试
+    change: 初始创建
+
+preconditions:
+  - 用户已登录系统
+  - 当前位于教师管理页面
+  - 存在工号为 "T001" 的教师
+  - 存在课程 "软件工程导论"
+
+steps:
+  - action: 在教师列表中找到工号为 "T001" 的教师
+    expected: 教师记录显示在列表中
+  - action: 点击"分配课程"按钮
+    expected: 显示课程分配界面，显示可选课程列表
+  - action: 选择课程 "软件工程导论"
+    expected: 课程选中状态
+  - action: 点击"保存"按钮
+    expected: 课程分配成功，教师信息中显示已分配课程
+
+expected_results:
+  - 教师成功绑定课程
+  - 教师详情中显示授课课程
+  - 课程详情中也显示该教师
+
+assertions:
+  - type: ui
+    description: 显示分配结果
+    validate:
+      - 教师信息中显示"软件工程导论"课程
+  - type: data
+    description: 关联关系正确
+    validate:
+      - 数据库中教师-课程关联关系正确建立

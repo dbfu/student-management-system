@@ -1,0 +1,55 @@
+# TC-SCORE-002 录入成绩（成绩超出范围）
+# score 模块 - 测试用例
+
+id: TC-SCORE-002
+title: 录入成绩（成绩超出范围）
+version: 1.0
+priority: P1
+module: score
+tags: [crud, create, validation, boundary]
+
+created_at: 2026-05-27
+updated_at: 2026-05-27
+status: active
+
+history:
+  - version: 1.0
+    date: 2026-05-27
+    author: 测试
+    change: 初始创建
+
+preconditions:
+  - 用户已登录系统
+  - 当前位于成绩管理页面
+
+test_scenarios:
+  - name: 成绩小于0
+    steps:
+      - action: 输入平时成绩 "-1"
+        expected: 输入框显示 "-1"
+      - action: 点击保存
+        expected: 显示错误提示"成绩范围为0-100"
+
+  - name: 成绩大于100
+    steps:
+      - action: 输入期末成绩 "101"
+        expected: 输入框显示 "101"
+      - action: 点击保存
+        expected: 显示错误提示"成绩范围为0-100"
+
+  - name: 成绩为小数
+    steps:
+      - action: 输入平时成绩 "85.5"
+        expected: 输入框显示内容
+      - action: 点击保存
+        expected: 成绩保存成功（或提示只允许整数）
+
+expected_results:
+  - 系统正确校验成绩范围
+  - 成绩超出0-100范围时显示错误提示
+
+assertions:
+  - type: ui
+    description: 显示范围校验提示
+    validate:
+      - 成绩小于0或大于100时显示"成绩范围为0-100"

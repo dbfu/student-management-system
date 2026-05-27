@@ -1,0 +1,44 @@
+# TC-CLASS-007 查看班级学生列表
+# class 模块 - 测试用例
+
+id: TC-CLASS-007
+title: 查看班级学生列表
+version: 1.0
+priority: P0
+module: class
+tags: [view, students, relation]
+
+created_at: 2026-05-27
+updated_at: 2026-05-27
+status: active
+
+history:
+  - version: 1.0
+    date: 2026-05-27
+    author: 测试
+    change: 初始创建
+
+preconditions:
+  - 用户已登录系统
+  - 当前位于班级管理页面
+  - 存在编号为 "C001" 的班级，且该班级下有学生
+
+steps:
+  - action: 在班级列表中找到编号为 "C001" 的班级
+    expected: 班级记录显示在列表中，班级人数大于0
+  - action: 点击"查看学生"按钮
+    expected: 显示班级学生列表页面/弹窗
+  - action: 查看学生列表内容
+    expected: 学生列表显示该班级下的所有学生，显示学号、姓名等信息
+
+expected_results:
+  - 成功显示班级学生列表
+  - 学生信息完整显示
+  - 班级人数统计正确
+
+assertions:
+  - type: ui
+    description: 显示学生列表
+    validate:
+      - 学生列表显示该班级下的所有学生
+      - 班级人数与学生列表数量一致

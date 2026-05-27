@@ -1,0 +1,52 @@
+# TC-COURSE-001 新增课程
+# course 模块 - 测试用例
+
+id: TC-COURSE-001
+title: 新增课程
+version: 1.0
+priority: P1
+module: course
+tags: [crud, create, smoke]
+
+created_at: 2026-05-27
+updated_at: 2026-05-27
+status: active
+
+history:
+  - version: 1.0
+    date: 2026-05-27
+    author: 测试
+    change: 初始创建
+
+preconditions:
+  - 用户已登录系统
+  - 当前位于课程管理页面
+  - 课程编号 "CS001" 在系统中不存在
+
+steps:
+  - action: 点击"新增课程"按钮
+    expected: 显示新增课程表单
+  - action: 输入课程编号 "CS001"
+    expected: 编号输入框显示 "CS001"
+  - action: 输入课程名称 "软件工程导论"
+    expected: 名称输入框显示 "软件工程导论"
+  - action: 选择课程类型 "必修课"
+    expected: 类型选择框显示 "必修课"
+  - action: 输入学分 "3"
+    expected: 学分输入框显示 "3"
+  - action: 输入学时 "48"
+    expected: 学时输入框显示 "48"
+  - action: 选择开课学期 "2024-2025-1"
+    expected: 学期选择框显示 "2024-2025-1"
+  - action: 点击"保存"按钮
+    expected: 课程信息保存成功，显示成功提示，课程列表显示新增记录
+
+expected_results:
+  - 课程信息成功保存
+  - 课程列表显示新增的课程记录
+
+assertions:
+  - type: ui
+    description: 显示新增课程记录
+    validate:
+      - 课程列表中存在编号为"CS001"的记录

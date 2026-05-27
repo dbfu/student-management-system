@@ -1,0 +1,44 @@
+# TC-TEACHER-006 删除教师信息（已绑定课程）
+# teacher 模块 - 测试用例
+
+id: TC-TEACHER-006
+title: 删除教师信息（已绑定课程）
+version: 1.0
+priority: P1
+module: teacher
+tags: [crud, delete, constraint, related-data]
+
+created_at: 2026-05-27
+updated_at: 2026-05-27
+status: active
+
+history:
+  - version: 1.0
+    date: 2026-05-27
+    author: 测试
+    change: 初始创建
+
+preconditions:
+  - 用户已登录系统
+  - 当前位于教师管理页面
+  - 存在工号为 "T001" 的教师，且该教师已绑定授课课程
+
+steps:
+  - action: 在教师列表中找到工号为 "T001" 的教师
+    expected: 教师记录显示在列表中
+  - action: 点击"删除"按钮
+    expected: 显示删除确认对话框，提示该教师已绑定课程
+  - action: 点击"确认"按钮
+    expected: 显示提示信息，建议修改教师状态而非物理删除
+
+expected_results:
+  - 系统检测到教师存在绑定课程
+  - 提示用户不建议直接删除
+  - 建议通过修改教师状态处理
+
+assertions:
+  - type: ui
+    description: 显示关联数据提示
+    validate:
+      - 提示"该教师已绑定课程，不建议删除"
+      - 提示可通过修改教师状态处理

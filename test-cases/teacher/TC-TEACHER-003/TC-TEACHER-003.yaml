@@ -1,0 +1,53 @@
+# TC-TEACHER-003 新增教师信息（必填字段为空）
+# teacher 模块 - 测试用例
+
+id: TC-TEACHER-003
+title: 新增教师信息（必填字段为空）
+version: 1.0
+priority: P0
+module: teacher
+tags: [crud, create, validation, required]
+
+created_at: 2026-05-27
+updated_at: 2026-05-27
+status: active
+
+history:
+  - version: 1.0
+    date: 2026-05-27
+    author: 测试
+    change: 初始创建
+
+preconditions:
+  - 用户已登录系统
+  - 当前位于教师管理页面
+
+test_scenarios:
+  - name: 工号为空
+    steps:
+      - action: 工号输入框留空
+        expected: 工号输入框为空
+      - action: 输入姓名
+        expected: 姓名输入框显示内容
+      - action: 点击保存
+        expected: 显示错误提示"教师工号不能为空"
+
+  - name: 姓名为空
+    steps:
+      - action: 输入工号 "T002"
+        expected: 工号输入框显示 "T002"
+      - action: 姓名输入框留空
+        expected: 姓名输入框为空
+      - action: 点击保存
+        expected: 显示错误提示"姓名不能为空"
+
+expected_results:
+  - 系统正确校验必填字段
+  - 显示明确的错误提示信息
+
+assertions:
+  - type: ui
+    description: 显示必填校验提示
+    validate:
+      - 空工号时显示"教师工号不能为空"
+      - 空姓名时显示"姓名不能为空"

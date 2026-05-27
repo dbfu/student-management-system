@@ -1,0 +1,42 @@
+# TC-COURSE-006 删除课程（已产生成绩）
+# course 模块 - 测试用例
+
+id: TC-COURSE-006
+title: 删除课程（已产生成绩）
+version: 1.0
+priority: P1
+module: course
+tags: [crud, delete, constraint, related-data]
+
+created_at: 2026-05-27
+updated_at: 2026-05-27
+status: active
+
+history:
+  - version: 1.0
+    date: 2026-05-27
+    author: 测试
+    change: 初始创建
+
+preconditions:
+  - 用户已登录系统
+  - 当前位于课程管理页面
+  - 存在编号为 "CS001" 的课程，且该课程已有成绩记录
+
+steps:
+  - action: 在课程列表中找到编号为 "CS001" 的课程
+    expected: 课程记录显示在列表中
+  - action: 点击"删除"按钮
+    expected: 显示删除确认对话框，提示该课程已有成绩记录
+  - action: 点击"确认"按钮
+    expected: 显示提示信息，不建议直接删除
+
+expected_results:
+  - 系统检测到课程已有成绩记录
+  - 提示用户不建议直接删除
+
+assertions:
+  - type: ui
+    description: 显示关联数据提示
+    validate:
+      - 提示"该课程已有成绩记录，不建议删除"

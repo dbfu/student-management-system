@@ -1,0 +1,46 @@
+# TC-CLASS-004 删除班级（无学生）
+# class 模块 - 测试用例
+
+id: TC-CLASS-004
+title: 删除班级（无学生）
+version: 1.0
+priority: P0
+module: class
+tags: [crud, delete, confirmation]
+
+created_at: 2026-05-27
+updated_at: 2026-05-27
+status: active
+
+history:
+  - version: 1.0
+    date: 2026-05-27
+    author: 测试
+    change: 初始创建
+
+preconditions:
+  - 用户已登录系统
+  - 当前位于班级管理页面
+  - 存在编号为 "C001" 的班级，且该班级下无学生
+
+steps:
+  - action: 在班级列表中找到编号为 "C001" 的班级
+    expected: 班级记录显示在列表中
+  - action: 点击"删除"按钮
+    expected: 显示删除确认对话框
+  - action: 点击"确认"按钮
+    expected: 班级信息删除成功，班级列表不再显示该记录
+
+expected_results:
+  - 删除操作需要二次确认
+  - 确认删除后班级记录被删除
+
+assertions:
+  - type: ui
+    description: 显示确认对话框
+    validate:
+      - 点击删除按钮时显示确认对话框
+  - type: data
+    description: 数据正确删除
+    validate:
+      - 确认删除后数据库中无该班级记录

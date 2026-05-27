@@ -1,0 +1,62 @@
+# TC-COURSE-003 新增课程（学分/学时为非正数）
+# course 模块 - 测试用例
+
+id: TC-COURSE-003
+title: 新增课程（学分/学时为非正数）
+version: 1.0
+priority: P1
+module: course
+tags: [crud, create, validation, number]
+
+created_at: 2026-05-27
+updated_at: 2026-05-27
+status: active
+
+history:
+  - version: 1.0
+    date: 2026-05-27
+    author: 测试
+    change: 初始创建
+
+preconditions:
+  - 用户已登录系统
+  - 当前位于课程管理页面
+
+test_scenarios:
+  - name: 学分为零
+    steps:
+      - action: 输入学分 "0"
+        expected: 学分输入框显示 "0"
+      - action: 点击保存
+        expected: 显示错误提示"学分必须为正数"
+
+  - name: 学分为负数
+    steps:
+      - action: 输入学分 "-1"
+        expected: 学分输入框显示 "-1"
+      - action: 点击保存
+        expected: 显示错误提示"学分必须为正数"
+
+  - name: 学时为零
+    steps:
+      - action: 输入学时 "0"
+        expected: 学时输入框显示 "0"
+      - action: 点击保存
+        expected: 显示错误提示"学时必须为正数"
+
+  - name: 学时为负数
+    steps:
+      - action: 输入学时 "-48"
+        expected: 学时输入框显示 "-48"
+      - action: 点击保存
+        expected: 显示错误提示"学时必须为正数"
+
+expected_results:
+  - 系统正确校验学分和学时
+  - 显示明确的错误提示
+
+assertions:
+  - type: ui
+    description: 显示数值校验提示
+    validate:
+      - 零或负数时显示"必须为正数"提示

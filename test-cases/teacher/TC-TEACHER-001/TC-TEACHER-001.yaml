@@ -1,0 +1,58 @@
+# TC-TEACHER-001 新增教师信息（正常）
+# teacher 模块 - 测试用例
+
+id: TC-TEACHER-001
+title: 新增教师信息（正常）
+version: 1.0
+priority: P0
+module: teacher
+tags: [crud, create, smoke]
+
+created_at: 2026-05-27
+updated_at: 2026-05-27
+status: active
+
+history:
+  - version: 1.0
+    date: 2026-05-27
+    author: 测试
+    change: 初始创建
+
+preconditions:
+  - 用户已登录系统
+  - 当前位于教师管理页面
+  - 教师工号 "T001" 在系统中不存在
+
+steps:
+  - action: 点击"新增教师"按钮
+    expected: 显示新增教师表单
+  - action: 输入教师工号 "T001"
+    expected: 工号输入框显示 "T001"
+  - action: 输入姓名 "李老师"
+    expected: 姓名输入框显示 "李老师"
+  - action: 选择性别 "男"
+    expected: 性别选择框显示 "男"
+  - action: 输入手机号 "13900139001"
+    expected: 手机号输入框显示 "13900139001"
+  - action: 输入邮箱 "li@school.edu.cn"
+    expected: 邮箱输入框显示 "li@school.edu.cn"
+  - action: 选择所属学院 "计算机学院"
+    expected: 学院选择框显示 "计算机学院"
+  - action: 选择职称 "副教授"
+    expected: 职称选择框显示 "副教授"
+  - action: 选择状态 "在职"
+    expected: 状态选择框显示 "在职"
+  - action: 点击"保存"按钮
+    expected: 教师信息保存成功，显示成功提示，教师列表中显示新增记录
+
+expected_results:
+  - 教师信息成功保存
+  - 教师列表中显示新增的教师记录
+  - 各字段信息显示正确
+
+assertions:
+  - type: ui
+    description: 显示新增教师记录
+    validate:
+      - 教师列表中存在工号为"T001"的记录
+      - 教师姓名显示为"李老师"

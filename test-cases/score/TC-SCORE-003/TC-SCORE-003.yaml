@@ -1,0 +1,48 @@
+# TC-SCORE-003 录入成绩（重复记录）
+# score 模块 - 测试用例
+
+id: TC-SCORE-003
+title: 录入成绩（同一学生同一课程重复记录）
+version: 1.0
+priority: P1
+module: score
+tags: [crud, create, validation, unique]
+
+created_at: 2026-05-27
+updated_at: 2026-05-27
+status: active
+
+history:
+  - version: 1.0
+    date: 2026-05-27
+    author: 测试
+    change: 初始创建
+
+preconditions:
+  - 用户已登录系统
+  - 当前位于成绩管理页面
+  - 存在学号为 "2024001" 的学生
+  - 存在课程编号为 "CS001" 的课程
+  - 该学生该课程该学期已有成绩记录
+
+steps:
+  - action: 选择学期 "2024-2025-1"
+    expected: 学期筛选框显示内容
+  - action: 选择课程 "CS001"
+    expected: 课程筛选框显示内容
+  - action: 输入学生学号 "2024001"
+    expected: 显示该学生信息
+  - action: 输入成绩信息
+    expected: 输入框显示内容
+  - action: 点击"保存"按钮
+    expected: 显示错误提示"该学生该课程该学期已有成绩记录"
+
+expected_results:
+  - 系统检测到重复成绩记录
+  - 显示明确的错误提示
+
+assertions:
+  - type: ui
+    description: 显示重复记录提示
+    validate:
+      - 页面显示"该学生该课程该学期已有成绩记录"或类似提示

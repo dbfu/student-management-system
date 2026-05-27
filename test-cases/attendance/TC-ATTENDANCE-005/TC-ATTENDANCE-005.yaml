@@ -1,0 +1,64 @@
+# TC-ATTENDANCE-005 查询考勤记录
+# attendance 模块 - 测试用例
+
+id: TC-ATTENDANCE-005
+title: 查询考勤记录（按条件筛选）
+version: 1.0
+priority: P1
+module: attendance
+tags: [query, filter, search]
+
+created_at: 2026-05-27
+updated_at: 2026-05-27
+status: active
+
+history:
+  - version: 1.0
+    date: 2026-05-27
+    author: 测试
+    change: 初始创建
+
+preconditions:
+  - 用户已登录系统
+  - 当前位于考勤管理页面
+  - 系统中存在多条考勤记录
+
+test_scenarios:
+  - name: 按学生搜索
+    steps:
+      - action: 输入学生学号或姓名
+        expected: 搜索框显示内容
+      - action: 点击搜索
+        expected: 考勤列表只显示该学生的考勤记录
+
+  - name: 按课程筛选
+    steps:
+      - action: 选择课程筛选条件
+        expected: 筛选框显示课程名称
+      - action: 应用筛选
+        expected: 考勤列表只显示该课程的考勤记录
+
+  - name: 按班级筛选
+    steps:
+      - action: 选择班级筛选条件
+        expected: 筛选框显示班级名称
+      - action: 应用筛选
+        expected: 考勤列表只显示该班级学生的考勤记录
+
+  - name: 按日期范围筛选
+    steps:
+      - action: 选择日期范围
+        expected: 日期范围选择器显示内容
+      - action: 应用筛选
+        expected: 考勤列表只显示日期范围内的考勤记录
+
+expected_results:
+  - 系统正确响应筛选条件
+  - 考勤列表显示符合筛选条件的记录
+
+assertions:
+  - type: ui
+    description: 筛选结果正确显示
+    validate:
+      - 按学生搜索结果只包含该学生的考勤
+      - 按日期范围筛选结果只包含范围内的考勤

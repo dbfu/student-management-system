@@ -1,0 +1,47 @@
+# TC-TEACHER-002 新增教师信息（工号重复）
+# teacher 模块 - 测试用例
+
+id: TC-TEACHER-002
+title: 新增教师信息（工号重复）
+version: 1.0
+priority: P0
+module: teacher
+tags: [crud, create, validation, unique]
+
+created_at: 2026-05-27
+updated_at: 2026-05-27
+status: active
+
+history:
+  - version: 1.0
+    date: 2026-05-27
+    author: 测试
+    change: 初始创建
+
+preconditions:
+  - 用户已登录系统
+  - 当前位于教师管理页面
+  - 教师工号 "T001" 在系统中已存在
+
+steps:
+  - action: 点击"新增教师"按钮
+    expected: 显示新增教师表单
+  - action: 输入教师工号 "T001"
+    expected: 工号输入框显示 "T001"
+  - action: 输入姓名 "王老师"
+    expected: 姓名输入框显示 "王老师"
+  - action: 填写其他必填字段
+    expected: 各字段正确填写
+  - action: 点击"保存"按钮
+    expected: 显示错误提示"教师工号已存在"
+
+expected_results:
+  - 系统检测到工号重复
+  - 显示明确的错误提示信息
+  - 教师信息未保存
+
+assertions:
+  - type: ui
+    description: 显示工号重复提示
+    validate:
+      - 页面显示"教师工号已存在"或类似提示

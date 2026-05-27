@@ -1,0 +1,51 @@
+# TC-SCORE-007 成绩统计
+# score 模块 - 测试用例
+
+id: TC-SCORE-007
+title: 成绩统计（平均分、最高分、最低分、及格率）
+version: 1.0
+priority: P1
+module: score
+tags: [statistics, analysis]
+
+created_at: 2026-05-27
+updated_at: 2026-05-27
+status: active
+
+history:
+  - version: 1.0
+    date: 2026-05-27
+    author: 测试
+    change: 初始创建
+
+preconditions:
+  - 用户已登录系统
+  - 当前位于成绩管理页面
+  - 系统中存在多条成绩记录
+
+steps:
+  - action: 选择课程进行统计
+    expected: 课程筛选框显示内容
+  - action: 点击"统计"或查看统计信息
+    expected: 显示该课程的统计结果
+
+expected_results:
+  - 显示平均分
+  - 显示最高分
+  - 显示最低分
+  - 显示及格率
+  - 可按不同维度（班级、学期等）统计
+
+assertions:
+  - type: ui
+    description: 显示统计数据
+    validate:
+      - 显示平均分数值
+      - 显示最高分数值
+      - 显示最低分数值
+      - 显示及格率百分比
+  - type: calculation
+    description: 统计计算正确
+    validate:
+      - 平均分 = 总评成绩总和 / 学生数量
+      - 及格率 = 及格学生数 / 总学生数 × 100%

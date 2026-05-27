@@ -1,0 +1,52 @@
+# TC-LOGIN-005 修改密码
+# login 模块 - 测试用例
+
+id: TC-LOGIN-005
+title: 修改密码
+version: 1.0
+priority: P1
+module: login
+tags: [auth, password, security]
+
+created_at: 2026-05-27
+updated_at: 2026-05-27
+status: active
+
+history:
+  - version: 1.0
+    date: 2026-05-27
+    author: 测试
+    change: 初始创建
+
+preconditions:
+  - 用户已登录系统
+  - 用户知道当前密码
+
+steps:
+  - action: 进入修改密码页面/弹窗
+    expected: 显示修改密码表单，包含旧密码、新密码、确认新密码输入框
+  - action: 输入旧密码 "admin123"
+    expected: 旧密码输入框显示加密内容
+  - action: 输入新密码 "newpass123"
+    expected: 新密码输入框显示加密内容
+  - action: 输入确认新密码 "newpass123"
+    expected: 确认新密码输入框显示加密内容
+  - action: 点击保存/确认按钮
+    expected: 密码修改成功，显示成功提示
+
+expected_results:
+  - 密码修改成功
+  - 显示修改成功提示信息
+  - 新密码已加密存储
+  - 用户可使用新密码登录
+
+assertions:
+  - type: ui
+    description: 显示成功提示
+    validate:
+      - 页面显示"密码修改成功"或类似提示
+  - type: behavior
+    description: 新密码生效
+    validate:
+      - 退出登录后使用新密码可成功登录
+      - 使用旧密码登录失败

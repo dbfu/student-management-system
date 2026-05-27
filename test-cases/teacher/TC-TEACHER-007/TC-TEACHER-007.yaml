@@ -1,0 +1,57 @@
+# TC-TEACHER-007 查询教师信息
+# teacher 模块 - 测试用例
+
+id: TC-TEACHER-007
+title: 查询教师信息（按条件筛选）
+version: 1.0
+priority: P0
+module: teacher
+tags: [query, filter, search]
+
+created_at: 2026-05-27
+updated_at: 2026-05-27
+status: active
+
+history:
+  - version: 1.0
+    date: 2026-05-27
+    author: 测试
+    change: 初始创建
+
+preconditions:
+  - 用户已登录系统
+  - 当前位于教师管理页面
+  - 系统中存在多个教师记录（不同学院）
+
+test_scenarios:
+  - name: 按工号搜索
+    steps:
+      - action: 在搜索框输入工号 "T001"
+        expected: 搜索框显示 "T001"
+      - action: 点击搜索
+        expected: 教师列表只显示工号包含"T001"的教师
+
+  - name: 按姓名搜索
+    steps:
+      - action: 在搜索框输入姓名 "李"
+        expected: 搜索框显示 "李"
+      - action: 点击搜索
+        expected: 教师列表只显示姓名包含"李"的教师
+
+  - name: 按学院筛选
+    steps:
+      - action: 在学院筛选框选择 "计算机学院"
+        expected: 筛选框显示 "计算机学院"
+      - action: 应用筛选
+        expected: 教师列表只显示所属学院为"计算机学院"的教师
+
+expected_results:
+  - 系统正确响应筛选条件
+  - 教师列表显示符合筛选条件的记录
+
+assertions:
+  - type: ui
+    description: 筛选结果正确显示
+    validate:
+      - 按工号搜索结果只包含匹配工号的记录
+      - 按学院筛选结果只包含对应学院的记录

@@ -1,0 +1,56 @@
+# TC-STUDENT-005 新增学生信息（邮箱格式错误）
+# student 模块 - 测试用例
+
+id: TC-STUDENT-005
+title: 新增学生信息（邮箱格式错误）
+version: 1.0
+priority: P1
+module: student
+tags: [crud, create, validation, format]
+
+created_at: 2026-05-27
+updated_at: 2026-05-27
+status: active
+
+history:
+  - version: 1.0
+    date: 2026-05-27
+    author: 测试
+    change: 初始创建
+
+preconditions:
+  - 用户已登录系统
+  - 当前位于学生管理页面
+
+test_scenarios:
+  - name: 邮箱缺少@
+    steps:
+      - action: 输入邮箱 "zhangsanexample.com"
+        expected: 邮箱输入框显示内容
+      - action: 点击保存
+        expected: 显示错误提示"邮箱格式不正确"
+
+  - name: 邮箱缺少域名后缀
+    steps:
+      - action: 输入邮箱 "zhangsan@example"
+        expected: 邮箱输入框显示内容
+      - action: 点击保存
+        expected: 显示错误提示"邮箱格式不正确"
+
+  - name: 邮箱含非法字符
+    steps:
+      - action: 输入邮箱 "zhang#san@example.com"
+        expected: 邮箱输入框显示内容
+      - action: 点击保存
+        expected: 显示错误提示"邮箱格式不正确"
+
+expected_results:
+  - 系统正确校验邮箱格式
+  - 显示明确的错误提示信息
+  - 学生信息未保存
+
+assertions:
+  - type: ui
+    description: 显示格式错误提示
+    validate:
+      - 显示"邮箱格式不正确"或类似提示

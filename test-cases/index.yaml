@@ -1,0 +1,121 @@
+# 学生管理系统 - 测试用例索引
+
+project: 学生管理系统
+version: 1.0.0
+created_at: 2026-05-27
+updated_at: 2026-05-27
+
+modules:
+  - id: login
+    name: 登录管理
+    priority: P0
+    cases:
+      - TC-LOGIN-001
+      - TC-LOGIN-002
+      - TC-LOGIN-003
+      - TC-LOGIN-004
+      - TC-LOGIN-005
+      - TC-LOGIN-006
+
+  - id: student
+    name: 学生信息管理
+    priority: P0
+    cases:
+      - TC-STUDENT-001
+      - TC-STUDENT-002
+      - TC-STUDENT-003
+      - TC-STUDENT-004
+      - TC-STUDENT-005
+      - TC-STUDENT-006
+      - TC-STUDENT-007
+      - TC-STUDENT-008
+      - TC-STUDENT-009
+      - TC-STUDENT-010
+      - TC-STUDENT-011
+      - TC-STUDENT-012
+
+  - id: teacher
+    name: 教师信息管理
+    priority: P0
+    cases:
+      - TC-TEACHER-001
+      - TC-TEACHER-002
+      - TC-TEACHER-003
+      - TC-TEACHER-004
+      - TC-TEACHER-005
+      - TC-TEACHER-006
+      - TC-TEACHER-007
+      - TC-TEACHER-008
+
+  - id: class
+    name: 班级管理
+    priority: P0
+    cases:
+      - TC-CLASS-001
+      - TC-CLASS-002
+      - TC-CLASS-003
+      - TC-CLASS-004
+      - TC-CLASS-005
+      - TC-CLASS-006
+      - TC-CLASS-007
+      - TC-CLASS-008
+
+  - id: course
+    name: 课程管理
+    priority: P1
+    cases:
+      - TC-COURSE-001
+      - TC-COURSE-002
+      - TC-COURSE-003
+      - TC-COURSE-004
+      - TC-COURSE-005
+      - TC-COURSE-006
+      - TC-COURSE-007
+
+  - id: score
+    name: 成绩管理
+    priority: P1
+    cases:
+      - TC-SCORE-001
+      - TC-SCORE-002
+      - TC-SCORE-003
+      - TC-SCORE-004
+      - TC-SCORE-005
+      - TC-SCORE-006
+      - TC-SCORE-007
+      - TC-SCORE-008
+
+  - id: attendance
+    name: 考勤管理
+    priority: P1
+    cases:
+      - TC-ATTENDANCE-001
+      - TC-ATTENDANCE-002
+      - TC-ATTENDANCE-003
+      - TC-ATTENDANCE-004
+      - TC-ATTENDANCE-005
+      - TC-ATTENDANCE-006
+
+statistics:
+  total: 47
+  P0: 26
+  P1: 21
+  modules: 7
+
+execution_plan:
+  smoke_test:
+    description: 冒烟测试 - 核心功能验证
+    cases:
+      - TC-LOGIN-001
+      - TC-STUDENT-001
+      - TC-TEACHER-001
+      - TC-CLASS-001
+      - TC-COURSE-001
+      - TC-SCORE-001
+      - TC-ATTENDANCE-001
+    count: 7
+
+  full_test:
+    description: 完整测试 - 全部用例
+    cases: all
+    count: 47

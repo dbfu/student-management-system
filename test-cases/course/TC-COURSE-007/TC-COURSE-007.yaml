@@ -1,0 +1,64 @@
+# TC-COURSE-007 查询课程（按条件筛选）
+# course 模块 - 测试用例
+
+id: TC-COURSE-007
+title: 查询课程（按条件筛选）
+version: 1.0
+priority: P1
+module: course
+tags: [query, filter, search]
+
+created_at: 2026-05-27
+updated_at: 2026-05-27
+status: active
+
+history:
+  - version: 1.0
+    date: 2026-05-27
+    author: 测试
+    change: 初始创建
+
+preconditions:
+  - 用户已登录系统
+  - 当前位于课程管理页面
+  - 系统中存在多个课程记录
+
+test_scenarios:
+  - name: 按课程编号搜索
+    steps:
+      - action: 在搜索框输入课程编号
+        expected: 搜索框显示内容
+      - action: 点击搜索
+        expected: 课程列表只显示匹配编号的课程
+
+  - name: 按课程名称搜索
+    steps:
+      - action: 在搜索框输入课程名称关键词
+        expected: 搜索框显示内容
+      - action: 点击搜索
+        expected: 课程列表只显示名称匹配的课程
+
+  - name: 按学期筛选
+    steps:
+      - action: 在学期筛选框选择学期
+        expected: 筛选框显示选择内容
+      - action: 应用筛选
+        expected: 课程列表只显示对应学期的课程
+
+  - name: 按教师筛选
+    steps:
+      - action: 在教师筛选框选择教师
+        expected: 筛选框显示教师姓名
+      - action: 应用筛选
+        expected: 课程列表只显示该教师教授的课程
+
+expected_results:
+  - 系统正确响应筛选条件
+  - 课程列表显示符合筛选条件的记录
+
+assertions:
+  - type: ui
+    description: 筛选结果正确显示
+    validate:
+      - 按编号搜索结果只包含匹配编号的记录
+      - 按学期筛选结果只包含对应学期的课程

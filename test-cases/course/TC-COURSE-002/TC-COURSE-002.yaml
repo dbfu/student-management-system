@@ -1,0 +1,44 @@
+# TC-COURSE-002 新增课程（编号重复）
+# course 模块 - 测试用例
+
+id: TC-COURSE-002
+title: 新增课程（编号重复）
+version: 1.0
+priority: P1
+module: course
+tags: [crud, create, validation, unique]
+
+created_at: 2026-05-27
+updated_at: 2026-05-27
+status: active
+
+history:
+  - version: 1.0
+    date: 2026-05-27
+    author: 测试
+    change: 初始创建
+
+preconditions:
+  - 用户已登录系统
+  - 当前位于课程管理页面
+  - 课程编号 "CS001" 在系统中已存在
+
+steps:
+  - action: 点击"新增课程"按钮
+    expected: 显示新增课程表单
+  - action: 输入课程编号 "CS001"
+    expected: 编号输入框显示 "CS001"
+  - action: 输入课程名称 "另一门课程"
+    expected: 名称输入框显示内容
+  - action: 点击"保存"按钮
+    expected: 显示错误提示"课程编号已存在"
+
+expected_results:
+  - 系统检测到编号重复
+  - 显示明确的错误提示
+
+assertions:
+  - type: ui
+    description: 显示编号重复提示
+    validate:
+      - 页面显示"课程编号已存在"或类似提示

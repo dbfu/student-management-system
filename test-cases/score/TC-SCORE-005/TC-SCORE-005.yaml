@@ -1,0 +1,48 @@
+# TC-SCORE-005 修改成绩
+# score 模块 - 测试用例
+
+id: TC-SCORE-005
+title: 修改成绩
+version: 1.0
+priority: P1
+module: score
+tags: [crud, update]
+
+created_at: 2026-05-27
+updated_at: 2026-05-27
+status: active
+
+history:
+  - version: 1.0
+    date: 2026-05-27
+    author: 测试
+    change: 初始创建
+
+preconditions:
+  - 用户已登录系统
+  - 当前位于成绩管理页面
+  - 存在学号为 "2024001" 学生课程 "CS001" 的成绩记录
+
+steps:
+  - action: 在成绩列表中找到该学生的成绩记录
+    expected: 成绩记录显示在列表中
+  - action: 点击"编辑"按钮
+    expected: 显示编辑成绩表单，显示当前成绩信息
+  - action: 修改期末成绩
+    expected: 期末成绩输入框显示新内容
+  - action: 点击"保存"按钮
+    expected: 显示修改成功提示，总评成绩重新计算，成绩列表显示更新信息，更新时间记录
+
+expected_results:
+  - 成绩修改成功
+  - 总评成绩重新计算
+  - 记录更新时间
+  - 及格状态正确更新
+
+assertions:
+  - type: ui
+    description: 显示更新结果
+    validate:
+      - 成绩列表显示修改后的成绩
+      - 总评成绩重新计算
+      - 及格状态正确更新

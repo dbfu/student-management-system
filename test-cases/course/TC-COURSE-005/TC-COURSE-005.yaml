@@ -1,0 +1,42 @@
+# TC-COURSE-005 删除课程（无成绩记录）
+# course 模块 - 测试用例
+
+id: TC-COURSE-005
+title: 删除课程（无成绩记录）
+version: 1.0
+priority: P1
+module: course
+tags: [crud, delete, confirmation]
+
+created_at: 2026-05-27
+updated_at: 2026-05-27
+status: active
+
+history:
+  - version: 1.0
+    date: 2026-05-27
+    author: 测试
+    change: 初始创建
+
+preconditions:
+  - 用户已登录系统
+  - 当前位于课程管理页面
+  - 存在编号为 "CS001" 的课程，且该课程无成绩记录
+
+steps:
+  - action: 在课程列表中找到编号为 "CS001" 的课程
+    expected: 课程记录显示在列表中
+  - action: 点击"删除"按钮
+    expected: 显示删除确认对话框
+  - action: 点击"确认"按钮
+    expected: 课程信息删除成功，课程列表不再显示该记录
+
+expected_results:
+  - 删除操作需要二次确认
+  - 确认删除后课程记录被删除
+
+assertions:
+  - type: ui
+    description: 显示确认对话框
+    validate:
+      - 点击删除按钮时显示确认对话框

@@ -1,0 +1,54 @@
+# TC-ATTENDANCE-006 考勤统计
+# attendance 模块 - 测试用例
+
+id: TC-ATTENDANCE-006
+title: 考勤统计（迟到、早退、请假、缺勤次数）
+version: 1.0
+priority: P1
+module: attendance
+tags: [statistics, analysis]
+
+created_at: 2026-05-27
+updated_at: 2026-05-27
+status: active
+
+history:
+  - version: 1.0
+    date: 2026-05-27
+    author: 测试
+    change: 初始创建
+
+preconditions:
+  - 用户已登录系统
+  - 当前位于考勤管理页面
+  - 系统中存在多条考勤记录（包含不同考勤状态）
+
+steps:
+  - action: 选择学生或班级进行统计
+    expected: 筛选条件正确显示
+  - action: 选择统计时间范围
+    expected: 时间范围正确显示
+  - action: 点击"统计"或查看统计信息
+    expected: 显示考勤统计结果
+
+expected_results:
+  - 显示迟到次数
+  - 显示早退次数
+  - 显示请假次数
+  - 显示缺勤次数
+  - 显示正常次数
+  - 可按学生、班级、课程、时间范围等维度统计
+
+assertions:
+  - type: ui
+    description: 显示统计数据
+    validate:
+      - 显示迟到次数数值
+      - 显示早退次数数值
+      - 显示请假次数数值
+      - 显示缺勤次数数值
+  - type: calculation
+    description: 统计计算正确
+    validate:
+      - 迟到次数 = 考勤状态为"迟到"的记录数
+      - 缺勤次数 = 考勤状态为"缺勤"的记录数

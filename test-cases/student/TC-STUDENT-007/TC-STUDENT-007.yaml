@@ -1,0 +1,60 @@
+# TC-STUDENT-007 删除学生信息（二次确认）
+# student 模块 - 测试用例
+
+id: TC-STUDENT-007
+title: 删除学生信息（二次确认）
+version: 1.0
+priority: P0
+module: student
+tags: [crud, delete, confirmation, security]
+
+created_at: 2026-05-27
+updated_at: 2026-05-27
+status: active
+
+history:
+  - version: 1.0
+    date: 2026-05-27
+    author: 测试
+    change: 初始创建
+
+preconditions:
+  - 用户已登录系统
+  - 当前位于学生管理页面
+  - 存在学号为 "2024001" 的学生记录（无关联成绩/考勤）
+
+test_scenarios:
+  - name: 确认删除
+    steps:
+      - action: 在学生列表中找到学号为 "2024001" 的学生
+        expected: 学生记录显示在列表中
+      - action: 点击该学生的"删除"按钮
+        expected: 显示删除确认对话框，提示"确认删除该学生信息？"
+      - action: 点击"确认"按钮
+        expected: 学生信息删除成功，学生列表中不再显示该记录
+
+  - name: 取消删除
+    steps:
+      - action: 在学生列表中找到学号为 "2024002" 的学生
+        expected: 学生记录显示在列表中
+      - action: 点击该学生的"删除"按钮
+        expected: 显示删除确认对话框
+      - action: 点击"取消"按钮
+        expected: 学生信息未删除，学生列表中仍显示该记录
+
+expected_results:
+  - 删除操作需要二次确认
+  - 确认删除后学生记录被删除
+  - 取消删除后学生记录保留
+  - 显示删除成功或取消提示
+
+assertions:
+  - type: ui
+    description: 显示确认对话框
+    validate:
+      - 点击删除按钮时显示确认对话框
+      - 对话框内容明确提示删除操作
+  - type: data
+    description: 数据正确删除
+    validate:
+      - 确认删除后数据库中无该学生记录

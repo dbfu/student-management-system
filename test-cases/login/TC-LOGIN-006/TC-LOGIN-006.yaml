@@ -1,0 +1,47 @@
+# TC-LOGIN-006 登录状态校验
+# login 模块 - 测试用例
+
+id: TC-LOGIN-006
+title: 登录状态校验（未登录访问内部页面）
+version: 1.0
+priority: P0
+module: login
+tags: [auth, security, access-control]
+
+created_at: 2026-05-27
+updated_at: 2026-05-27
+status: active
+
+history:
+  - version: 1.0
+    date: 2026-05-27
+    author: 测试
+    change: 初始创建
+
+preconditions:
+  - 用户未登录系统
+  - 系统正常运行
+
+steps:
+  - action: 直接访问学生管理页面URL（如 /student）
+    expected: 系统检测到未登录状态，重定向到登录页面
+  - action: 直接访问教师管理页面URL（如 /teacher）
+    expected: 系统检测到未登录状态，重定向到登录页面
+  - action: 直接访问班级管理页面URL（如 /class）
+    expected: 系统检测到未登录状态，重定向到登录页面
+
+expected_results:
+  - 未登录用户无法访问系统内部页面
+  - 系统自动重定向到登录页面
+  - 登录后可正常访问内部页面
+
+assertions:
+  - type: behavior
+    description: 未登录拦截
+    validate:
+      - 访问任意内部页面URL时被重定向到登录页面
+      - 不显示内部页面内容
+  - type: behavior
+    description: 登录后可访问
+    validate:
+      - 登录后访问同一URL可正常显示页面内容
