@@ -42,11 +42,11 @@ export async function getClassesController(
     const { page, pageSize, keyword, collegeId, majorId } = query
 
     const result = await classService.getClassesService({
-      page: page || 1,
-      pageSize: pageSize || 10,
+      page: parseInt(String(page)) || 1,
+      pageSize: parseInt(String(pageSize)) || 10,
       keyword,
-      collegeId,
-      majorId,
+      collegeId: collegeId ? parseInt(String(collegeId)) : undefined,
+      majorId: majorId ? parseInt(String(majorId)) : undefined,
     })
 
     return reply.send(success(paginate(result.list, result.total, result.page, result.pageSize)))
@@ -154,7 +154,11 @@ export async function getClassStudentsController(
     const { id } = params
     const { page, pageSize } = query
 
-    const result = await classService.getClassStudentsService(id, page || 1, pageSize || 10)
+    const result = await classService.getClassStudentsService(
+      id,
+      parseInt(String(page)) || 1,
+      parseInt(String(pageSize)) || 10
+    )
     return reply.send(success(paginate(result.list, result.total, result.page, result.pageSize)))
   } catch (err) {
     const message = err instanceof Error ? err.message : '获取班级学生列表失败'

@@ -43,10 +43,10 @@ export async function getTeachersController(
     const { page, pageSize, keyword, collegeId, status } = query
 
     const result = await teacherService.getTeachersService({
-      page: page || 1,
-      pageSize: pageSize || 10,
+      page: parseInt(String(page)) || 1,
+      pageSize: parseInt(String(pageSize)) || 10,
       keyword,
-      collegeId,
+      collegeId: collegeId ? parseInt(String(collegeId)) : undefined,
       status,
     })
 

@@ -40,10 +40,10 @@ export async function getStudentsController(
     const { page, pageSize, keyword, classId, status } = query
 
     const result = await studentService.getStudentsService({
-      page: page || 1,
-      pageSize: pageSize || 10,
+      page: parseInt(String(page)) || 1,
+      pageSize: parseInt(String(pageSize)) || 10,
       keyword,
-      classId,
+      classId: classId ? parseInt(String(classId)) : undefined,
       status,
     })
 
