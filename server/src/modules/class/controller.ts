@@ -34,11 +34,12 @@ interface StudentsQueryParams {
 
 // 获取班级列表
 export async function getClassesController(
-  request: FastifyRequest<{ Querystring: ClassQueryParams }>,
+  request: FastifyRequest,
   reply: FastifyReply
 ) {
   try {
-    const { page, pageSize, keyword, collegeId, majorId } = request.query
+    const query = request.query as ClassQueryParams
+    const { page, pageSize, keyword, collegeId, majorId } = query
 
     const result = await classService.getClassesService({
       page: page || 1,
@@ -57,11 +58,12 @@ export async function getClassesController(
 
 // 获取班级详情
 export async function getClassController(
-  request: FastifyRequest<{ Params: IdParams }>,
+  request: FastifyRequest,
   reply: FastifyReply
 ) {
   try {
-    const { id } = request.params
+    const params = request.params as IdParams
+    const { id } = params
     const classInfo = await classService.getClassService(id)
     return reply.send(success(classInfo))
   } catch (err) {
@@ -73,18 +75,19 @@ export async function getClassController(
 
 // 创建班级
 export async function createClassController(
-  request: FastifyRequest<{ Body: ClassBody }>,
+  request: FastifyRequest,
   reply: FastifyReply
 ) {
   try {
-    const { code, name, collegeId, majorId, grade } = request.body
+    const body = request.body as ClassBody
+    const { code, name, collegeId, majorId, grade } = body
 
     // 必填字段校验
     if (!code || !name || !collegeId || !majorId || !grade) {
       return reply.code(400).send(error(1001, '必填字段不能为空'))
     }
 
-    const classInfo = await classService.createClassService(request.body)
+    const classInfo = await classService.createClassService(body)
     return reply.send(success({ id: classInfo.id }, '添加成功'))
   } catch (err) {
     const message = err instanceof Error ? err.message : '创建班级失败'
@@ -99,13 +102,15 @@ export async function createClassController(
 
 // 更新班级
 export async function updateClassController(
-  request: FastifyRequest<{ Params: IdParams; Body: Partial<ClassBody> }>,
+  request: FastifyRequest,
   reply: FastifyReply
 ) {
   try {
-    const { id } = request.params
+    const params = request.params as IdParams
+    const body = request.body as Partial<ClassBody>
+    const { id } = params
 
-    await classService.updateClassService(id, request.body)
+    await classService.updateClassService(id, body)
     return reply.send(success(null, '修改成功'))
   } catch (err) {
     const message = err instanceof Error ? err.message : '更新班级失败'
@@ -121,11 +126,12 @@ export async function updateClassController(
 
 // 删除班级
 export async function deleteClassController(
-  request: FastifyRequest<{ Params: IdParams }>,
+  request: FastifyRequest,
   reply: FastifyReply
 ) {
   try {
-    const { id } = request.params
+    const params = request.params as IdParams
+    const { id } = params
     const result = await classService.deleteClassService(id)
     return reply.send(success(null, result.message))
   } catch (err) {
@@ -139,12 +145,14 @@ export async function deleteClassController(
 
 // 获取班级学生列表
 export async function getClassStudentsController(
-  request: FastifyRequest<{ Params: IdParams; Querystring: StudentsQueryParams }>,
+  request: FastifyRequest,
   reply: FastifyReply
 ) {
   try {
-    const { id } = request.params
-    const { page, pageSize } = request.query
+    const params = request.params as IdParams
+    const query = request.query as StudentsQueryParams
+    const { id } = params
+    const { page, pageSize } = query
 
     const result = await classService.getClassStudentsService(id, page || 1, pageSize || 10)
     return reply.send(success(paginate(result.list, result.total, result.page, result.pageSize)))

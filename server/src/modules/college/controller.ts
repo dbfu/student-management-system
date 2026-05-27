@@ -4,7 +4,7 @@ import * as collegeService from './service'
 
 // 获取学院列表
 export async function getCollegesController(
-  request: FastifyRequest,
+  _request: FastifyRequest,
   reply: FastifyReply
 ) {
   try {
@@ -18,11 +18,12 @@ export async function getCollegesController(
 
 // 获取专业列表
 export async function getMajorsController(
-  request: FastifyRequest<{ Querystring: { collegeId?: number } }>,
+  request: FastifyRequest,
   reply: FastifyReply
 ) {
   try {
-    const { collegeId } = request.query
+    const query = request.query as { collegeId?: number }
+    const { collegeId } = query
     const majors = await collegeService.getMajorsService(collegeId)
     return reply.send(success(majors))
   } catch (err) {

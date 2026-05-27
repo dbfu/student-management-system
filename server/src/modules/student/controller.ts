@@ -32,11 +32,12 @@ interface IdParams {
 
 // 获取学生列表
 export async function getStudentsController(
-  request: FastifyRequest<{ Querystring: StudentQueryParams }>,
+  request: FastifyRequest,
   reply: FastifyReply
 ) {
   try {
-    const { page, pageSize, keyword, classId, status } = request.query
+    const query = request.query as StudentQueryParams
+    const { page, pageSize, keyword, classId, status } = query
 
     const result = await studentService.getStudentsService({
       page: page || 1,
@@ -55,11 +56,12 @@ export async function getStudentsController(
 
 // 获取学生详情
 export async function getStudentController(
-  request: FastifyRequest<{ Params: IdParams }>,
+  request: FastifyRequest,
   reply: FastifyReply
 ) {
   try {
-    const { id } = request.params
+    const params = request.params as IdParams
+    const { id } = params
     const student = await studentService.getStudentService(id)
     return reply.send(success(student))
   } catch (err) {
@@ -71,11 +73,12 @@ export async function getStudentController(
 
 // 创建学生
 export async function createStudentController(
-  request: FastifyRequest<{ Body: StudentBody }>,
+  request: FastifyRequest,
   reply: FastifyReply
 ) {
   try {
-    const { code, name, gender, classId, enrollYear, status } = request.body
+    const body = request.body as StudentBody
+    const { code, name, gender, classId, enrollYear, status } = body
 
     // 必填字段校验
     if (!code || !name || !gender || !classId || !enrollYear || !status) {
@@ -83,18 +86,18 @@ export async function createStudentController(
     }
 
     // 手机号格式校验
-    const phone = request.body.phone
+    const phone = body.phone
     if (phone && !/^1[3-9]\d{9}$/.test(phone)) {
       return reply.code(400).send(error(1001, '手机号格式不正确'))
     }
 
     // 邮箱格式校验
-    const email = request.body.email
+    const email = body.email
     if (email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
       return reply.code(400).send(error(1001, '邮箱格式不正确'))
     }
 
-    const student = await studentService.createStudentService(request.body)
+    const student = await studentService.createStudentService(body)
     return reply.send(success({ id: student.id }, '添加成功'))
   } catch (err) {
     const message = err instanceof Error ? err.message : '创建学生失败'
@@ -105,25 +108,27 @@ export async function createStudentController(
 
 // 更新学生
 export async function updateStudentController(
-  request: FastifyRequest<{ Params: IdParams; Body: Partial<StudentBody> }>,
+  request: FastifyRequest,
   reply: FastifyReply
 ) {
   try {
-    const { id } = request.params
+    const params = request.params as IdParams
+    const body = request.body as Partial<StudentBody>
+    const { id } = params
 
     // 手机号格式校验
-    const phone = request.body.phone
+    const phone = body.phone
     if (phone && !/^1[3-9]\d{9}$/.test(phone)) {
       return reply.code(400).send(error(1001, '手机号格式不正确'))
     }
 
     // 邮箱格式校验
-    const email = request.body.email
+    const email = body.email
     if (email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
       return reply.code(400).send(error(1001, '邮箱格式不正确'))
     }
 
-    await studentService.updateStudentService(id, request.body)
+    await studentService.updateStudentService(id, body)
     return reply.send(success(null, '修改成功'))
   } catch (err) {
     const message = err instanceof Error ? err.message : '更新学生失败'
@@ -137,11 +142,12 @@ export async function updateStudentController(
 
 // 删除学生
 export async function deleteStudentController(
-  request: FastifyRequest<{ Params: IdParams }>,
+  request: FastifyRequest,
   reply: FastifyReply
 ) {
   try {
-    const { id } = request.params
+    const params = request.params as IdParams
+    const { id } = params
     const result = await studentService.deleteStudentService(id)
     return reply.send(success(null, result.message))
   } catch (err) {

@@ -1,6 +1,5 @@
 import bcrypt from 'bcrypt'
 import prisma from '../../lib/prisma'
-import { JwtPayload } from '@fastify/jwt'
 
 export interface LoginInput {
   username: string

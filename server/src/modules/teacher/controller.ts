@@ -35,11 +35,12 @@ interface AssignCoursesBody {
 
 // 获取教师列表
 export async function getTeachersController(
-  request: FastifyRequest<{ Querystring: TeacherQueryParams }>,
+  request: FastifyRequest,
   reply: FastifyReply
 ) {
   try {
-    const { page, pageSize, keyword, collegeId, status } = request.query
+    const query = request.query as TeacherQueryParams
+    const { page, pageSize, keyword, collegeId, status } = query
 
     const result = await teacherService.getTeachersService({
       page: page || 1,
@@ -58,11 +59,12 @@ export async function getTeachersController(
 
 // 获取教师详情
 export async function getTeacherController(
-  request: FastifyRequest<{ Params: IdParams }>,
+  request: FastifyRequest,
   reply: FastifyReply
 ) {
   try {
-    const { id } = request.params
+    const params = request.params as IdParams
+    const { id } = params
     const teacher = await teacherService.getTeacherService(id)
     return reply.send(success(teacher))
   } catch (err) {
@@ -74,11 +76,12 @@ export async function getTeacherController(
 
 // 创建教师
 export async function createTeacherController(
-  request: FastifyRequest<{ Body: TeacherBody }>,
+  request: FastifyRequest,
   reply: FastifyReply
 ) {
   try {
-    const { code, name, gender, collegeId, status } = request.body
+    const body = request.body as TeacherBody
+    const { code, name, gender, collegeId, status } = body
 
     // 必填字段校验
     if (!code || !name || !gender || !collegeId || !status) {
@@ -86,18 +89,18 @@ export async function createTeacherController(
     }
 
     // 手机号格式校验
-    const phone = request.body.phone
+    const phone = body.phone
     if (phone && !/^1[3-9]\d{9}$/.test(phone)) {
       return reply.code(400).send(error(1001, '手机号格式不正确'))
     }
 
     // 邮箱格式校验
-    const email = request.body.email
+    const email = body.email
     if (email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
       return reply.code(400).send(error(1001, '邮箱格式不正确'))
     }
 
-    const teacher = await teacherService.createTeacherService(request.body)
+    const teacher = await teacherService.createTeacherService(body)
     return reply.send(success({ id: teacher.id }, '添加成功'))
   } catch (err) {
     const message = err instanceof Error ? err.message : '创建教师失败'
@@ -110,25 +113,27 @@ export async function createTeacherController(
 
 // 更新教师
 export async function updateTeacherController(
-  request: FastifyRequest<{ Params: IdParams; Body: Partial<TeacherBody> }>,
+  request: FastifyRequest,
   reply: FastifyReply
 ) {
   try {
-    const { id } = request.params
+    const params = request.params as IdParams
+    const body = request.body as Partial<TeacherBody>
+    const { id } = params
 
     // 手机号格式校验
-    const phone = request.body.phone
+    const phone = body.phone
     if (phone && !/^1[3-9]\d{9}$/.test(phone)) {
       return reply.code(400).send(error(1001, '手机号格式不正确'))
     }
 
     // 邮箱格式校验
-    const email = request.body.email
+    const email = body.email
     if (email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
       return reply.code(400).send(error(1001, '邮箱格式不正确'))
     }
 
-    await teacherService.updateTeacherService(id, request.body)
+    await teacherService.updateTeacherService(id, body)
     return reply.send(success(null, '修改成功'))
   } catch (err) {
     const message = err instanceof Error ? err.message : '更新教师失败'
@@ -142,11 +147,12 @@ export async function updateTeacherController(
 
 // 删除教师
 export async function deleteTeacherController(
-  request: FastifyRequest<{ Params: IdParams }>,
+  request: FastifyRequest,
   reply: FastifyReply
 ) {
   try {
-    const { id } = request.params
+    const params = request.params as IdParams
+    const { id } = params
     const result = await teacherService.deleteTeacherService(id)
     return reply.send(success(null, result.message))
   } catch (err) {
@@ -158,12 +164,14 @@ export async function deleteTeacherController(
 
 // 分配课程
 export async function assignCoursesController(
-  request: FastifyRequest<{ Params: IdParams; Body: AssignCoursesBody }>,
+  request: FastifyRequest,
   reply: FastifyReply
 ) {
   try {
-    const { id } = request.params
-    const { courseIds } = request.body
+    const params = request.params as IdParams
+    const body = request.body as AssignCoursesBody
+    const { id } = params
+    const { courseIds } = body
 
     if (!courseIds || !Array.isArray(courseIds) || courseIds.length === 0) {
       return reply.code(400).send(error(1001, '课程ID列表不能为空'))

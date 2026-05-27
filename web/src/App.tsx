@@ -1,6 +1,6 @@
 import { Routes, Route, Navigate } from 'react-router-dom'
 import { useAuthStore } from './shared/store/auth-store'
-import { Layout } from './shared/components'
+import { Layout, ToastProvider } from './shared/components'
 
 // 页面组件
 import LoginPage from './pages/login'
@@ -30,7 +30,8 @@ const ProtectedRoute = ({ children }: { children: React.ReactNode }) => {
 
 function App() {
   return (
-    <Routes>
+    <ToastProvider>
+      <Routes>
       {/* 公开路由 */}
       <Route path="/login" element={<LoginPage />} />
 
@@ -81,7 +82,8 @@ function App() {
 
       {/* 404 */}
       <Route path="*" element={<NotFoundPage />} />
-    </Routes>
+      </Routes>
+    </ToastProvider>
   )
 }
 

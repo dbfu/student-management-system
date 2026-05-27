@@ -9,7 +9,7 @@ interface StatisticsQueryParams {
 
 // 首页统计
 export async function getDashboardStatisticsController(
-  request: FastifyRequest,
+  _request: FastifyRequest,
   reply: FastifyReply
 ) {
   try {
@@ -23,11 +23,12 @@ export async function getDashboardStatisticsController(
 
 // 学生统计
 export async function getStudentStatisticsController(
-  request: FastifyRequest<{ Querystring: StatisticsQueryParams }>,
+  request: FastifyRequest,
   reply: FastifyReply
 ) {
   try {
-    const { dimension } = request.query
+    const query = request.query as StatisticsQueryParams
+    const { dimension } = query
 
     if (!dimension) {
       return reply.code(400).send(error(1001, '请指定统计维度'))

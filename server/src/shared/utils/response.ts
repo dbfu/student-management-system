@@ -37,15 +37,15 @@ export function paginate<T>(
   }
 }
 
-// JWT认证中间件
+// JWT认证中间件 - 使用正确的类型签名
 export async function authMiddleware(
   request: FastifyRequest,
   reply: FastifyReply
-) {
+): Promise<void> {
   try {
     await request.jwtVerify()
   } catch (err) {
-    return reply.code(401).send({
+    reply.code(401).send({
       code: 1002,
       data: null,
       message: '未登录或token已过期',
