@@ -9,7 +9,7 @@ export async function getColleges(): Promise<College[]> {
 
 // 获取专业列表
 export async function getMajors(collegeId?: number): Promise<Major[]> {
-  const response = await request.get<ApiResponse<Major[]>>('/majors', {
+  const response = await request.get<ApiResponse<Major[]>>('/colleges/majors', {
     params: collegeId ? { collegeId } : undefined,
   })
   return response.data.data
