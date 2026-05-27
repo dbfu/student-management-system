@@ -1,5 +1,5 @@
 import { FastifyRequest, FastifyReply } from 'fastify'
-import { success, error, authMiddleware } from '../../shared/utils/response'
+import { success, error } from '../../shared/utils/response'
 import * as authService from './service'
 
 // 登录请求体类型
@@ -16,11 +16,12 @@ interface ChangePasswordBody {
 
 // 登录
 export async function loginController(
-  request: FastifyRequest<{ Body: LoginBody }>,
+  request: FastifyRequest,
   reply: FastifyReply
 ) {
   try {
-    const { username, password } = request.body
+    const body = request.body as LoginBody
+    const { username, password } = body
 
     // 参数校验
     if (!username || !password) {
@@ -71,7 +72,7 @@ export async function getCurrentUserController(
 
 // 修改密码
 export async function changePasswordController(
-  request: FastifyRequest<{ Body: ChangePasswordBody }>,
+  request: FastifyRequest,
   reply: FastifyReply
 ) {
   try {
@@ -79,7 +80,8 @@ export async function changePasswordController(
     await request.jwtVerify()
 
     const payload = request.user as { userId: number }
-    const { oldPassword, newPassword } = request.body
+    const body = request.body as ChangePasswordBody
+    const { oldPassword, newPassword } = body
 
     // 参数校验
     if (!oldPassword || !newPassword) {

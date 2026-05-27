@@ -17,6 +17,17 @@ export default function LoginPage() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     setError('')
+
+    // 客户端验证
+    if (!username.trim()) {
+      setError('请输入用户名')
+      return
+    }
+    if (!password.trim()) {
+      setError('请输入密码')
+      return
+    }
+
     setLoading(true)
 
     try {

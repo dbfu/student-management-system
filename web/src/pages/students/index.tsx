@@ -6,13 +6,22 @@ import { StudentFilters } from './student-filters'
 import { StudentStats } from './student-stats'
 import { StudentTable } from './student-table'
 import { StudentModals } from './student-modal'
+import { useToast } from '../../shared/components'
+import { useDebounce } from '../../shared/hooks/use-debounce'
 
 export default function StudentListPage() {
+  const { showToast } = useToast()
+
   // 数据状态
   const [students, setStudents] = useState<Student[]>([])
   const [colleges, setColleges] = useState<College[]>([])
   const [loading, setLoading] = useState(true)
   const [total, setTotal] = useState(0)
+
+  // 查询参数 - 用于搜索输入显示
+  const [searchInput, setSearchInput] = useState('')
+  // 实际发送到API的参数（使用防抖）
+  const debouncedSearch = useDebounce(searchInput, 300)
 
   // 查询参数
   const [params, setParams] = useState<StudentQueryParams>({
@@ -38,6 +47,11 @@ export default function StudentListPage() {
     status: '在读',
   })
   const [saving, setSaving] = useState(false)
+
+  // 防抖搜索：当debouncedSearch变化时更新params
+  useEffect(() => {
+    setParams((prev) => ({ ...prev, keyword: debouncedSearch, page: 1 }))
+  }, [debouncedSearch])
 
   // 加载学生数据
   const loadStudents = useCallback(async () => {
@@ -85,9 +99,9 @@ export default function StudentListPage() {
     loadStudents()
   }, [loadStudents])
 
-  // 搜索处理
+  // 搜索处理 - 更新searchInput，通过debounce间接更新params
   const handleSearch = (keyword: string) => {
-    setParams({ ...params, keyword, page: 1 })
+    setSearchInput(keyword)
   }
 
   // 筛选处理
@@ -102,14 +116,26 @@ export default function StudentListPage() {
 
   // 新增学生
   const handleAdd = async () => {
+    // 表单验证
+    if (!formData.code.trim()) {
+      showToast('请输入学号', 'error')
+      return
+    }
+    if (!formData.name.trim()) {
+      showToast('请输入姓名', 'error')
+      return
+    }
+
     setSaving(true)
     try {
       await createStudent(formData)
+      showToast('学生添加成功', 'success')
       setAddModalOpen(false)
       loadStudents()
       resetForm()
     } catch (err) {
       console.error('新增学生失败:', err)
+      showToast('新增学生失败，请稍后重试', 'error')
     } finally {
       setSaving(false)
     }
@@ -197,6 +223,7 @@ export default function StudentListPage() {
       <StudentFilters
         params={params}
         colleges={colleges}
+        searchInput={searchInput}
         onSearch={handleSearch}
         onFilter={handleFilter}
         onAddClick={() => setAddModalOpen(true)}

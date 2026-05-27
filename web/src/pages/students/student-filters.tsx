@@ -4,6 +4,7 @@ import { StudentQueryParams } from '../../shared/types'
 interface StudentFiltersProps {
   params: StudentQueryParams
   colleges: College[]
+  searchInput: string
   onSearch: (keyword: string) => void
   onFilter: (key: string, value: string | number | undefined) => void
   onAddClick: () => void
@@ -17,7 +18,7 @@ const STATUS_OPTIONS = [
   { value: '退学', label: '退学' },
 ]
 
-export function StudentFilters({ params, colleges, onSearch, onFilter, onAddClick }: StudentFiltersProps) {
+export function StudentFilters({ params, colleges, searchInput, onSearch, onFilter, onAddClick }: StudentFiltersProps) {
   return (
     <div className="card p-6">
       <div className="flex flex-wrap gap-4 items-center">
@@ -30,7 +31,7 @@ export function StudentFilters({ params, colleges, onSearch, onFilter, onAddClic
             <input
               type="text"
               placeholder="搜索学号或姓名..."
-              value={params.keyword}
+              value={searchInput}
               onChange={(e) => onSearch(e.target.value)}
               className="search-input"
             />
