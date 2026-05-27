@@ -1,34 +1,30 @@
 import { FastifyInstance } from 'fastify'
-import { success, paginate } from '../../shared/utils/response'
+import {
+  getTeachersController,
+  getTeacherController,
+  createTeacherController,
+  updateTeacherController,
+  deleteTeacherController,
+  assignCoursesController,
+} from './controller'
+import { authMiddleware } from '../../shared/utils/response'
 
 export async function teacherRoutes(fastify: FastifyInstance) {
   // 获取教师列表
-  fastify.get('/', async (request, reply) => {
-    // TODO: 实现教师列表查询
-    return reply.send(success(paginate([], 0, 1, 10)))
-  })
+  fastify.get('/', { onRequest: authMiddleware }, getTeachersController)
 
   // 获取教师详情
-  fastify.get('/:id', async (request, reply) => {
-    // TODO: 实现教师详情查询
-    return reply.send(success(null))
-  })
+  fastify.get('/:id', { onRequest: authMiddleware }, getTeacherController)
 
   // 新增教师
-  fastify.post('/', async (request, reply) => {
-    // TODO: 实现新增教师
-    return reply.send(success({ id: 1 }, '添加成功'))
-  })
+  fastify.post('/', { onRequest: authMiddleware }, createTeacherController)
 
   // 修改教师
-  fastify.put('/:id', async (request, reply) => {
-    // TODO: 实现修改教师
-    return reply.send(success(null, '修改成功'))
-  })
+  fastify.put('/:id', { onRequest: authMiddleware }, updateTeacherController)
 
   // 删除教师
-  fastify.delete('/:id', async (request, reply) => {
-    // TODO: 实现删除教师
-    return reply.send(success(null, '删除成功'))
-  })
+  fastify.delete('/:id', { onRequest: authMiddleware }, deleteTeacherController)
+
+  // 分配课程
+  fastify.post('/:id/courses', { onRequest: authMiddleware }, assignCoursesController)
 }

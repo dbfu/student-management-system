@@ -1,52 +1,15 @@
 import { Routes, Route, Navigate } from 'react-router-dom'
 import { useAuthStore } from './shared/store/auth-store'
+import { Layout } from './shared/components'
 
-// 页面组件（暂时使用占位组件）
-const LoginPage = () => (
-  <div className="min-h-screen flex items-center justify-center bg-gray-50">
-    <div className="card w-full max-w-md">
-      <h1 className="text-2xl font-bold text-center mb-6">学生管理系统</h1>
-      <p className="text-gray-500 text-center">登录页面（待开发）</p>
-    </div>
-  </div>
-)
+// 页面组件
+import LoginPage from './pages/login'
+import DashboardPage from './pages/dashboard'
+import StudentListPage from './pages/students'
+import TeacherListPage from './pages/teachers'
+import ClassListPage from './pages/classes'
 
-const DashboardPage = () => (
-  <div className="min-h-screen bg-gray-50 p-6">
-    <div className="card">
-      <h1 className="text-2xl font-bold mb-4">仪表盘</h1>
-      <p className="text-gray-500">首页仪表盘（待开发）</p>
-    </div>
-  </div>
-)
-
-const StudentListPage = () => (
-  <div className="min-h-screen bg-gray-50 p-6">
-    <div className="card">
-      <h1 className="text-2xl font-bold mb-4">学生管理</h1>
-      <p className="text-gray-500">学生列表页面（待开发）</p>
-    </div>
-  </div>
-)
-
-const TeacherListPage = () => (
-  <div className="min-h-screen bg-gray-50 p-6">
-    <div className="card">
-      <h1 className="text-2xl font-bold mb-4">教师管理</h1>
-      <p className="text-gray-500">教师列表页面（待开发）</p>
-    </div>
-  </div>
-)
-
-const ClassListPage = () => (
-  <div className="min-h-screen bg-gray-50 p-6">
-    <div className="card">
-      <h1 className="text-2xl font-bold mb-4">班级管理</h1>
-      <p className="text-gray-500">班级列表页面（待开发）</p>
-    </div>
-  </div>
-)
-
+// 404页面
 const NotFoundPage = () => (
   <div className="min-h-screen flex items-center justify-center bg-gray-50">
     <div className="card text-center">
@@ -71,39 +34,50 @@ function App() {
       {/* 公开路由 */}
       <Route path="/login" element={<LoginPage />} />
 
-      {/* 受保护的路由 */}
+      {/* 受保护的路由 - 使用Layout */}
       <Route
         path="/"
         element={
           <ProtectedRoute>
-            <DashboardPage />
+            <Layout title="首页仪表盘" />
           </ProtectedRoute>
         }
-      />
+      >
+        <Route index element={<DashboardPage />} />
+      </Route>
+
       <Route
         path="/students"
         element={
           <ProtectedRoute>
-            <StudentListPage />
+            <Layout title="学生管理" />
           </ProtectedRoute>
         }
-      />
+      >
+        <Route index element={<StudentListPage />} />
+      </Route>
+
       <Route
         path="/teachers"
         element={
           <ProtectedRoute>
-            <TeacherListPage />
+            <Layout title="教师管理" />
           </ProtectedRoute>
         }
-      />
+      >
+        <Route index element={<TeacherListPage />} />
+      </Route>
+
       <Route
         path="/classes"
         element={
           <ProtectedRoute>
-            <ClassListPage />
+            <Layout title="班级管理" />
           </ProtectedRoute>
         }
-      />
+      >
+        <Route index element={<ClassListPage />} />
+      </Route>
 
       {/* 404 */}
       <Route path="*" element={<NotFoundPage />} />
